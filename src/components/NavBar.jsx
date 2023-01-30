@@ -2,21 +2,23 @@ import {
     Button,HStack,Flex,Spacer, Box, ButtonGroup,InputGroup,InputLeftElement,Input
    } from '@chakra-ui/react'
  import {GrSearch} from "react-icons/gr"
+import { Link } from 'react-router-dom';
  
-const NavBar = () =>{
+const NavBar = ({data}) =>{
     return (
 
         <>
-        <HStack w={"max-content"} h={"max-content"}  p={"2"} pt="20">
-<Flex minWidth='165vh' alignItems='center' gap='2'>
+        <HStack h={"max-content"}   pt="3rem" >
+<Flex  w="100%" gap='2'  >
  
   
   <ButtonGroup  gap='2' variant='outline'>
-    <Button borderRadius='40' colorScheme='twitter' >Upcoming IDO</Button>
-    <Button borderRadius='40' colorScheme='black'>Active IDO</Button>
-    <Button borderRadius='40' colorScheme='black'>Ended IDO</Button>
+    
+    <Link to="/"><Button borderRadius='40' colorScheme={data == "upcoming" ? "twitter" : "blackAlpha"} >Upcoming IDO</Button></Link>
+    <Link to="/active"><Button borderRadius='40' colorScheme={data == "active" ? "twitter" : "blackAlpha"}>Active IDO</Button></Link>
+    <Button borderRadius='40' colorScheme='blackAlpha'>Ended IDO</Button>
   </ButtonGroup><Spacer />
-  <Box mr={"4"}>
+  <Box mr={"4"} > 
   {/* <Button mr="4" borderRadius='40' leftIcon={<GrSearch></GrSearch>} variant='outline' colorScheme='black'>Search</Button> */}
   <InputGroup >
     <InputLeftElement

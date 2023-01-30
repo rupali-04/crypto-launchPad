@@ -2,10 +2,12 @@ import { Card,CardHeader,Flex,Avatar,Spacer,Box,Heading,Text,IconButton,CardBody
 import {TiSocialLinkedin,TiSocialFacebook,TiSocialTwitter} from 'react-icons/ti';
 import {FaTelegramPlane} from 'react-icons/fa';
 import {AiOutlineGlobal} from 'react-icons/ai'
+import { Link } from "react-router-dom";
 const Cards = () =>{
     return (
 
         <>
+         <Link to="/project/ido">
             <Card maxW={"360px"} bg={"#F1F1F1"} color="black">
   <CardHeader>
     <Flex >
@@ -109,7 +111,7 @@ const Cards = () =>{
   >
   
   </CardFooter>
-</Card>    
+</Card> </Link>   
         </>
     );
 }

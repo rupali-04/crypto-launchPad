@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "honeybite-launchpad",
+    "staging": "honeybite-launchpad"
+  },
+  "targets": {},
+  "etags": {}
+}
