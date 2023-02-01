@@ -38,7 +38,7 @@ return(<><p>
  
   <Link to="/admin/dashboard/ido"><Button bg="#1F94FF" borderRadius={"0"} pl="2rem" pr="2rem" color="white">ADD NEW PROJECT</Button></Link>
   <Link to="/admin/dashboard/ido/open"><Button borderRadius={"0"} pl="2rem" pr="2rem">OPEN PROJECT</Button></Link>
-  <Button borderRadius={"0"}  pl="2rem" pr="2rem">CLOSE PROJECT </Button>
+  <Link to="/admin/dashboard/ido/close"><Button borderRadius={"0"}  pl="2rem" pr="2rem">CLOSE PROJECT </Button></Link>
   </ButtonGroup>
 <Spacer />
 

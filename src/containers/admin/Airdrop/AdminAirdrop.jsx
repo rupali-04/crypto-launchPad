@@ -38,7 +38,7 @@ return(<><p>
  
   <Link to="/admin/dashboard/airdrop"><Button bg="#1F94FF" borderRadius={"0"} pl="2rem" pr="2rem" color="white">ADD NEW AIRDROP</Button></Link>
   <Link to="/admin/dashboard/airdrop/open"><Button borderRadius={"0"} pl="2rem" pr="2rem">OPEN AIRDROP</Button></Link>
-  <Button borderRadius={"0"}  pl="2rem" pr="2rem">CLOSE AIRDROP</Button>
+  <Link to="/admin/dashboard/airdrop/close"><Button borderRadius={"0"}  pl="2rem" pr="2rem">CLOSE AIRDROP</Button></Link>
   </ButtonGroup>
 <Spacer />
 

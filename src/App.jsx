@@ -46,6 +46,9 @@ import UserStatus from './containers/admin/User/UserStatus';
 import AdminLink from './containers/admin/AdminLink';
 import AdminHelp from './containers/admin/AdminHelp';
 import AdminCommision from './containers/admin/AdminCommision';
+import AdminAirdropClose from './containers/admin/Airdrop/AdminAirdropClose';
+import AdminIDOClose from './containers/admin/IDO/AdminIDOClose';
+import AdminVentureClose from './containers/admin/Venture/AdminVentureClose';
 
 
 const App = () => {
@@ -93,6 +96,9 @@ const App = () => {
         <Route path="/admin/dashboard/link" element={<AdminLink/>}/>
         <Route path="/admin/dashboard/help" element={<AdminHelp/>}/>
         <Route path="admin/dashboard/commission" element={<AdminCommision/>}/>
+        <Route path="/admin/dashboard/airdrop/close" element={<AdminAirdropClose/>}/>
+        <Route path="/admin/dashboard/ido/close" element={<AdminIDOClose/>}/>
+        <Route path="/admin/dashboard/venture/close" element={<AdminVentureClose/>}/>
         </> }
         <Route path="/project/ido" element={<MainProject/>}/>
         <Route path="/project/venture" element={<VentureProject/>}/>

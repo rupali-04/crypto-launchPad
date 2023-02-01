@@ -36,10 +36,10 @@ const AdminAirdropOpen = () =>{
   
 <ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="1100px">
  
-  <Link to="/admin/dashboard/venture"><Button bg="#1F94FF" borderRadius={"0"} pl="2rem" pr="2rem" color="white">ADD NEW PROJECT</Button></Link>
-  <Link to="/admin/dashboard/venture/open"><Button borderRadius={"0"} pl="2rem" pr="2rem">OPEN PROJECT</Button></Link>
-  <Button borderRadius={"0"}  pl="2rem" pr="2rem">CLOSE PROJECT </Button>
-  </ButtonGroup>
+<Link to="/admin/dashboard/airdrop"><Button  borderRadius={"0"} pl="2rem" pr="2rem" >ADD NEW AIRDROP</Button></Link>
+  <Link to="/admin/dashboard/airdrop/open"><Button  borderRadius={"0"} bg="#1F94FF" color="white" pl="2rem" pr="2rem">OPEN AIRDROP</Button></Link>
+  <Link to="/admin/dashboard/airdrop/close"><Button borderRadius={"0"}   pl="2rem" pr="2rem">CLOSE AIRDROP</Button></Link>
+</ButtonGroup>
 <Spacer />
 
 </HStack>

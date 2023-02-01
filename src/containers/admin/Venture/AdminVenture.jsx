@@ -19,7 +19,7 @@ const AdminVenture = () =>{
  
 return(<><p>
          <Flex><AdminBar/>
-<Flex flexWrap={"wrap"} ml="2rem" overflowX={"hidden"} flexDirection={"column"}>
+<Flex flexWrap={"wrap"} ml="2rem"  w="100%"  flexDirection={"column"}>
  <Flex>
  <Flex m="1rem" fontSize={"24px"}></Flex><Spacer/>
      <Flex m="1rem" ><Box display='flex'   flexWrap={"wrap"} flexDirection={"column"}>
@@ -36,9 +36,9 @@ return(<><p>
   
 <ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="1100px">
  
-  <Link to="/admin/dashboard/venture"><Button bg="#1F94FF" borderRadius={"0"} pl="2rem" pr="2rem" color="white">ADD NEW PROJECT</Button></Link>
-  <Link to="/admin/dashboard/venture/open"><Button borderRadius={"0"} pl="2rem" pr="2rem">OPEN PROJECT</Button></Link>
-  <Button borderRadius={"0"}  pl="2rem" pr="2rem">CLOSE PROJECT </Button>
+  <Link to="/admin/dashboard/venture"><Button bg="#1F94FF" borderRadius={"0"} pl="2rem" pr="2rem" color="white">ADD NEW VENTURE</Button></Link>
+  <Link to="/admin/dashboard/venture/open"><Button borderRadius={"0"} pl="2rem" pr="2rem">OPEN VENTURE</Button></Link>
+  <Link to="/admin/dashboard/venture/close"><Button borderRadius={"0"}  pl="2rem" pr="2rem">CLOSE VENTURE </Button></Link>
   </ButtonGroup>
 <Spacer />
 

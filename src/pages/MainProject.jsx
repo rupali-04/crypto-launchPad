@@ -18,11 +18,12 @@ const MainProject = () => {
     return(<><div>
         
         <Flex><SideBar/>
-        <Flex flexWrap={"wrap"} flexDirection={"column"}>
-        <Flex>
-       <Box ml="2rem"> <Details/><Flex fontSize={"12"}><Text fontWeight={"bold"} color={"#1F94FF"}>Total Raise 10,000 BUSD</Text>  <Spacer /><Text>Targeted Raise 30,000 BUSD</Text></Flex><Progress size='lg' value={10} /> </Box>
-       {isLoggedIn === false ? "" :  <><Flex mt="2rem"  h="max-content" ml="22rem"><Card bg="gray.100" borderRadius={"40px"} w="max-content" h="max-content"><CardHeader><Flex><Text>Allocation Eligibility</Text><Button>FCFS</Button><Button>EA</Button><IconButton aria-label="icon" icon={<AiOutlineQuestionCircle/>}/></Flex> </CardHeader></Card></Flex>
-       <Flex mt="8rem"  ml="-21.5rem"><Card h="max-content" bg="gray.100" borderRadius={"40px"}><CardBody><Text textAlign={"center"} fontWeight="bold" fontSize={"22px"}><IconButton aria-label='Search database' icon={<BsWallet2 />} cursor="none" pl="0.25rem" h="max-content"  fontSize={"24"} variant={"unstyled"}></IconButton>Balance : 10000 BUSD</Text><Flex> <Input bg="white" borderRadius={"0"} w="200px" variant='outline' /><Button borderRadius={"0"} colorScheme={"blue"}>Invest Now</Button></Flex><Text textAlign={"center"} color="gray" fontSize={"12px"}>Maximum Invest $2000*</Text></CardBody></Card></Flex></>
+        <Flex flexWrap={"wrap"} ml="1rem"  w="100%"  flexDirection={"column"}>
+        <Flex >
+       <Box ml="2rem"> <Details/><Flex fontSize={"12"}><Text fontWeight={"bold"}  color={"#1F94FF"}>Total Raise 10,000 BUSD</Text>  <Spacer /><Text>Targeted Raise 30,000 BUSD</Text></Flex><Progress size='lg' value={10} /> </Box>
+       {isLoggedIn === false ? "" :  <Flex   w="100%" justifyContent={"center"} mt="1.5rem" ><Flex gap="4" flexWrap={"wrap"} ml="1rem"    flexDirection={"column"} ><Card bg="gray.100" borderRadius={"40px"} w="max-content" h="max-content"><CardHeader><Flex alignItems={"center"}><Text>Allocation Eligibility</Text><Button>FCFS</Button><Button>EA</Button><IconButton aria-label="icon" icon={<AiOutlineQuestionCircle/>}/></Flex> </CardHeader></Card>
+       <Card h="max-content" w="max-content" bg="gray.100" borderRadius={"40px"}><CardBody><Flex direction={"column"}><Text fontWeight="bold" fontSize={"22px"} textAlign="center"><IconButton aria-label='Search database' icon={<BsWallet2 />} cursor="none" pl="0.25rem" h="max-content"  fontSize={"24"} variant={"unstyled"}></IconButton>Balance : 10000 BUSD</Text><Flex> <Input bg="white" borderRadius={"0"} w="200px" variant='outline' /><Button borderRadius={"0"} colorScheme={"blue"}>Invest Now</Button></Flex><Text color="gray" fontSize={"12px"} textAlign="center">Maximum Invest $2000*</Text></Flex></CardBody></Card></Flex>
+       </Flex>
       }
        </Flex>
        <Box ml="2rem" mt="3rem">

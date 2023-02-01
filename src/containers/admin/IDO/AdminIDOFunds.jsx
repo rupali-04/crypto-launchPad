@@ -36,9 +36,9 @@ const AdminIDOFunds = () =>{
   
 <ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="1100px">
  
-<Link to="/admin/dashboard/venture"><Button  borderRadius={"0"} pl="2rem" pr="2rem" >ADD NEW PROJECT</Button></Link>
-  <Link to="/admin/dashboard/venture/open"><Button bg="blue.400" color="white" borderRadius={"0"} pl="2rem" pr="2rem">OPEN PROJECT</Button></Link>
-  <Button borderRadius={"0"}  pl="2rem" pr="2rem">CLOSE PROJECT </Button>
+<Link to="/admin/dashboard/ido"><Button  borderRadius={"0"} pl="2rem" pr="2rem" >ADD NEW PROJECT</Button></Link>
+  <Link to="/admin/dashboard/ido/open"><Button borderRadius={"0"} pl="2rem" pr="2rem" bg="#1F94FF" color="white">OPEN PROJECT</Button></Link>
+  <Link to="/admin/dashboard/ido/close"><Button borderRadius={"0"}  pl="2rem" pr="2rem" >CLOSE PROJECT </Button></Link>
   </ButtonGroup>
 <Spacer />
 
