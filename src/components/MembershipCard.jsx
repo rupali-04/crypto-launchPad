@@ -1,61 +1,44 @@
-import { Heading,Divider,Stack,ButtonGroup,Button,Spacer,Text,Card, CardHeader, CardBody, CardFooter, Box, HStack } from "@chakra-ui/react";
+import { Input,Flex,Heading,Divider,Stack,ButtonGroup,Button,Spacer,Text,Card, CardHeader, CardBody, CardFooter, Box, HStack, ListItem, UnorderedList } from "@chakra-ui/react";
 import { Link } from 'react-router-dom';
 
 const MembershipCard = ({data}) =>{
     return(
 
         <>
-                <Card maxW='sm' borderRadius={"40"}  bg="#3B72FF" alignItems={"center"} textAlign="center" color={"white"}>
-  <CardBody>
-    <Stack  spacing='3'>
-      <Text fontSize={"28"} fontStyle={"normal"} >{data.type}</Text>
-      <Text fontSize={"40"} fontWeight={"bold"} pt="1rem" >{data.price} | FOR <Text fontSize={"16"} fontStyle="bold"  mt={"0.25rem"} ml="197" textAlign={"left"}>{data.total}</Text></Text>
-      <Text>
+        <Flex direction={"column"}>
+                <Card maxW={"sm"} h="lg" borderRadius={"0"} shadow="0"   bg="gray.100" alignItems={"center"} textAlign="center" >
+  <CardBody p="0">
+    <Stack m="0" spacing='3'>
+      <Text  fontStyle={"normal"} fontWeight="bold" pt="1rem">{data.type}</Text>
+    <Flex p="0.5rem" direction={"column"} bg="gray" textAlign={"center"} color="white"><Text  fontSize={"14px"} textDecoration={"line-through"} textDecorationColor="red" textDecorationThickness={"0.06rem"}>Normally $350</Text><Text p="1rem" fontSize={"40"} >{data.price}</Text><Text fontSize={"14px"} pt="0.5rem">$50 Savings</Text></Flex>
+      <Text p="0.5rem" fontSize={"14px"}>
         {data.description}
       </Text>
-        
-      <HStack pl={"15px"}>
-      <Text w={"180px"} textAlign={"left"} color="gray.200">
-        {data.h1}
-      </Text>
-    <Text color="white" textStyle={"bold"}>
-    {data.value1}
-      </Text>
-      </HStack>
-     
-      
-      <HStack pl={"15px"}>
-      <Text w={"180px"} textAlign={"left"} color="gray.200">
-        {data.h2}
-      </Text>
-    <Text color="white" textStyle={"bold"}>
-       {data.value2}
-      </Text>
-      </HStack>
-      <HStack pl={"15px"}>
-      <Text w={"180px"} textAlign={"left"} color="gray.200">
-        {data.h3}
-      </Text>
-
-    <Text color="white" textStyle={"bold"}>
-        {data.value3}
-      </Text>
-      </HStack>
-     
-      
+        <Flex pl="0.75rem" >
+     <UnorderedList textAlign={"left"}  >
+      <ListItem>Vaild for only 1 IDO</ListItem>
+      <ListItem>Investment limit $1000 per IDO</ListItem>
+      <ListItem>Early access before 24Hr</ListItem>
+      <ListItem>No expiry date</ListItem>
+      <ListItem>No service charge</ListItem>
+     </UnorderedList>
+     </Flex>
    
     </Stack>
   </CardBody>
  
   <CardFooter>
-    <ButtonGroup spacing='2' >
-      <Button variant='solid' borderRadius={"40"} colorScheme="gray" color={"black"}>
-        PURCHASE NOW
+    
+      <Button borderRadius={"40"} bg="blue.400" color={"white"}>
+        Buy Now
       </Button>
      
-    </ButtonGroup>
+    
   </CardFooter>
+ 
 </Card>
+<Flex bg="white" mt="0.5rem"><Input borderRadius={"40"} placeholder="ENTER PROMO CODE "></Input><Button bg="blue.400" color={"white"} fontSize="14px" borderRadius={"40px"}>Apply Now</Button></Flex>
+</Flex>
         </>
 
     )

@@ -1,19 +1,24 @@
-import { Menu,MenuButton,MenuList,MenuItem, Heading,Flex,Text, Avatar,Box,Button ,IconButton,Spacer,Wrap,WrapItem,Center, Divider} from "@chakra-ui/react";
+import { HStack,ButtonGroup,Flex,Text, Avatar,Box,Button ,IconButton,Spacer,Wrap,WrapItem,Center, Divider} from "@chakra-ui/react";
 import Logo from "../images/Logo.jpg";
 import {TfiWallet} from 'react-icons/tfi';
 import {BsPersonCircle} from 'react-icons/bs';
 import {FiCopy} from 'react-icons/fi';
+import CompanySmartContractNav from "../components/CompanySmartContractNav";
 import DashboardNav from "../components/DashboardNav";
 import {IoIosArrowDown} from "react-icons/io";
 import AdminNav from "../components/AdminNav";
 import { useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import AdminBiddingNav from "../components/AdminBiddingNav";
+import AdminInsuranceNav from "../components/AdminInsuranceNav";
+import IDOSmartContract from "../components/IDOSmartContract";
+import AirdropSmartContract from "../components/AirdropSmartContract";
+import VentureSmartContract from "../components/VentureSmartContract";
 const CompanyPanel = () =>{
-  const [num,setNum] = useState("1"); 
+  const [contract,setContract] = useState("ido"); 
   const [show,setShow] = useState("none");
     return(<>
-    <Flex direction={"column"}>
+    <Flex fontFamily={'Inter'} direction={"column"} w="100%" p="1rem">
     <Flex>
     <Flex m="1rem" fontSize={"24px"}><Avatar src={Logo} size="lg"></Avatar><Flex direction={"column"} mt="0.35rem"><Text mt="0.25rem">HoneyBite</Text><Text mt="-0.30rem" fontSize="10px">A Revolution For New Era</Text></Flex></Flex><Spacer/>
      <Flex m="1rem"><Box display='flex'   flexWrap={"wrap"} flexDirection={"column"}>
@@ -90,7 +95,52 @@ const CompanyPanel = () =>{
 
 </Flex>
 
+
 </Flex>
+<Flex direction={"column"} p="2rem">
+  <Text fontWeight={"bold"}  fontSize="18px" >INSURANCE AMOUNT CLAIM</Text>
+  <Box mt="1rem"><AdminInsuranceNav/></Box>
+  <Flex w="100%" gap="10" mt="1rem" fontWeight={"bold"}>
+    <Text w="100px">No</Text>
+    <Text w="100px">Project Name</Text>
+    <Text w="150px">Smart Contract</Text>
+    <Text w="100px">Total Raised</Text>
+    <Text w="150px">Insurance Lock</Text>
+    <Text w="150px">Available Amount</Text>
+    <Text w="100px">Claim Details</Text>
+    <Text w="100px">Locked Time</Text>
+  </Flex> <Divider mt="1rem" h="0.09rem"  bg={"black"}/>
+  <Flex w="100%" gap="10" mt="1rem">
+    <Text w="100px">1</Text>
+    <Text w="100px">Script Network</Text>
+    <Text w="150px">0xdafea4....98bc5 </Text>
+    <Text w="100px">200 BNB</Text>
+    <Text w="150px">20 BNB</Text>
+    <Text w="150px">25 BNB</Text>
+    <Button w="100px" size={"sm"} bg="blue.400" color={"white"} borderRadius="40px">Claim Amount</Button>
+    <Text w="100px">90 Days</Text>
+  </Flex>
+  <Flex>
+
+  </Flex>
+  <Flex direction={"column"} pt="2rem">
+  <Text fontWeight={"bold"}  fontSize="18px" >SMART CONTRACT DETAILS</Text>
+  <Box  mt="1rem"> <HStack w={"max-content"} h={"max-content"}  pt="0" >
+
+ 
+<ButtonGroup  bg="gray.200"  gap={"4"}variant='unstyled'>
+ 
+  {contract === "ido" ? <Button bg="#1F94FF" borderRadius={"0"} p="0.5rem" pl="2rem" pr="2rem" onClick={()=>{setContract("ido")}} color="white">IDO SMART CONTRACT</Button> : <Button bg="gray.200" borderRadius={"0"} p="0.5rem" pl="2rem" pr="2rem" onClick={()=>{setContract("ido")}} >IDO SMART CONTRACT</Button>}
+  {contract === "airdrop" ? <Button bg="#1F94FF" color="white" borderRadius={"0"} p="0.5rem" pl="2rem" pr="2rem" onClick={()=>{setContract("airdrop")}}>AIRDROP SMART CONTRACT</Button> : <Button bg="gray.200" borderRadius={"0"} p="0.5rem" pl="2rem" pr="2rem" onClick={()=>{setContract("airdrop")}}>AIRDROP SMART CONTRACT</Button>}
+  {contract === "venture" ? <Button bg="#1F94FF" color="white" borderRadius={"0"} p="0.5rem" pl="2rem" pr="2rem" onClick={()=>{setContract("venture")}}>VENTURE SMART CONTRACT</Button> : <Button bg="gray.200" borderRadius={"0"} p="0.5rem" pl="2rem" pr="2rem" onClick={()=>{setContract("venture")}}>VENTURE SMART CONTRACT</Button>}
+  </ButtonGroup>
+<Spacer />
+
+</HStack></Box>
+  {contract === "ido" ? <IDOSmartContract/> : contract === "airdrop" ? <AirdropSmartContract/> : contract === "venture" ? <VentureSmartContract/> : ""}
+  </Flex>
+</Flex>
+
 </Box>
 
 </Flex>

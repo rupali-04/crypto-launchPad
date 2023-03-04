@@ -1,8 +1,8 @@
 import { Flex, Heading,Text,Divider, Button } from "@chakra-ui/react";
 const ProjectBid = () =>{
     return(<>
-        <Flex direction={"column"} gap="4">
-                <Heading size={"sm"}>YOUR BIDDING DETAILS</Heading>
+        <Flex fontFamily={'Inter'} direction={"column"} gap="4">
+                <Heading fontFamily={'Inter'} size={"sm"}>YOUR BIDDING DETAILS</Heading>
                 <Flex gap="4">
                     <Text w="150px">Project Name</Text>
                     <Text w="150px">Bidding Price</Text>

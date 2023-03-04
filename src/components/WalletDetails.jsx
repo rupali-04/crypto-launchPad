@@ -1,7 +1,22 @@
 import { Box,Flex,Text, Button, Spacer,VStack,Wrap, WrapItem,Center } from "@chakra-ui/react";
 import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { ethers } from "ethers";
+import { useEffect, useState } from "react";
 
-const WalletDetails = () =>{
+
+const WalletDetails = (data) =>{
+    const wallet = useSelector(state => state.wallet);
+    const [balance,setBalance] = useState(0);
+    
+    useEffect(()=>{
+        async function bal() {
+            console.log("wwwww",await wallet.signer.getBalance());
+            setBalance(await wallet.signer.getBalance());    
+           
+        }
+        bal();
+    },[wallet]);
     
     return(<>
         {/* <Flex  p="4"  ml="80" flexWrap="wrap" justifyContent="center" >
@@ -28,33 +43,33 @@ const WalletDetails = () =>{
             </Flex> */}
             <Flex wrap={"wrap"} direction="row" p="2rem"  >
     
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Wallet Address</Text><Text fontWeight={"bold"} color={"#1F94FF"}>0x495B7F.....A86fbF374</Text></Box> <Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Wallet Address</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{`${wallet.address}`}</Text></Box> <Spacer/>
     
 
   
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Wallet Balance</Text><Text fontWeight={"bold"} color={"#1F94FF"}>$1000</Text></Box> <Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Wallet Balance</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{`${ethers.utils.formatEther(balance)}`}</Text></Box> <Spacer/>
  
  
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Chain</Text><Text fontWeight={"bold"} color={"#1F94FF"}>Polygon</Text></Box> <Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Chain</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{`${wallet.chainId}`}</Text></Box> <Spacer/>
    
  
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >KYC Status</Text><Text><Link to="/dashboard/profile/kyc"><Button borderRadius='20' h={"25px"} variant='solid'  fontSize="12px"  colorScheme="red" >Pending</Button></Link></Text></Box> <Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >KYC Status</Text><Text><Link to="/dashboard/profile/kyc">{data.data.kycStatus ? <Button isActive={"false"} borderRadius='20' variant='outline'  h={"25px"}  fontSize="12px" colorScheme="green" >Active</Button> : <Button borderRadius='20' h={"25px"} variant='solid'  fontSize="12px"  colorScheme="red" >Pending</Button>}</Link></Text></Box> <Spacer/>
    
   
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Membership</Text><Text ><Button isActive={"false"} borderRadius='20' variant='outline'  h={"25px"}  fontSize="12px" colorScheme="green" >Active</Button></Text></Box> <Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Membership</Text><Text >{data.data.membershipStatus ? <Button isActive={"false"} borderRadius='20' variant='outline'  h={"25px"}  fontSize="12px" colorScheme="green" >Active</Button> : <Button borderRadius='20' h={"25px"} variant='solid'  fontSize="12px"  colorScheme="red" >Pending</Button>}</Text></Box> <Spacer/>
    </Flex>
    <Flex wrap={"wrap"} direction="row" p="2rem" pt="1rem">
   
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Total IDO Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>$4000</Text></Box><Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Total IDO Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalIDOInvestment.Ethereum} BNB</Text></Box><Spacer/>
    
  
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Airdrop Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>$45263</Text></Box><Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Airdrop Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalAirdropInvestment.Ethereum} BNB</Text></Box><Spacer/>
    
  
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"}>No. of Airdrop</Text><Text fontWeight={"bold"} color={"#1F94FF"}>65</Text></Box><Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"}>No. of Airdrop</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalAirdrops.Ethereum}</Text></Box><Spacer/>
    
   
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Honey-Bite Venture Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>$6500</Text></Box><Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Honey-Bite Venture Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalVentureInvestment.Ethereum} BNB</Text></Box><Spacer/>
    
 </Flex>
     </>)

@@ -1,0 +1,105 @@
+const idoCompany = {
+    honeyBiteSmartContract: "String",
+    tokenSmartContract: "String",
+    tokenName: "String",
+    tokenSymbol: "String",
+    projectDetails: "String",
+    totalSupply: "String",
+    chainType: "String",
+    TGE: "Number",
+    cliffPeriod: "Number",
+    linearVestPeriod: "String",
+    kycRequrinment: "Boolean",
+    insurance: "Boolean",
+    insuranceLock: "Number",
+    insuranceCharge: "Number",
+    commission: "Number",
+    serviceCharge: "Number",
+    socialMedia: {
+        "Twitter": "String",
+        "Linkedin": "String",
+        "Youtube": "String",
+        "Website": "String",
+        "Instagram": "String"
+    },
+    insuranceLockTime: "String",
+    type: "IDO",
+    companyId: "ObjectId",
+    fcfsOpen: "Date",
+    fcfsClose: "Date",
+    earlyAccess: "Date",
+    swapRate: "Number",
+    totalRaise: "Number",
+    totalToken: "Number",
+    accessType: "String",
+    faq: [{"Question": "Answer"},{"Question": "Answer"}],
+    teamMembers: "Image",
+    teamPartners: "Image",
+    tokenDistributionData: [{"name":"value"},{"name":"value"},{"name":"value"}],
+    salesRound: "Image"
+}
+
+
+const ventureCompany = {
+    honeyBiteSmartContract: "String",
+    tokenSmartContract: "String",
+    tokenName: "String",
+    tokenSymbol: "String",
+    projectDetails: "String",
+    totalSupply: "String",
+    chainType: "String",
+    TGE: "Number",
+    cliffPeriod: "Number",
+    linearVestPeriod: "String",
+    kycRequrinment: "Boolean",
+    insurance: "Boolean",
+    insuranceCharge: "Number",
+    socialMedia: {
+        "Twitter": "String",
+        "Linkedin": "String",
+        "Youtube": "String",
+        "Website": "String",
+        "Instagram": "String"
+    },
+    type: "Venture",
+    companyId: "ObjectId",
+    BiddingDate: "Date", 
+    accessType: "String",
+    bidRange: {
+        "minValue": "Number",
+        "maxValue": "Number"
+    },
+    faq: [{"Question": "Answer"},{"Question": "Answer"}],
+    teamPartners: "Image",
+    tokenDistributionData: [{"name":"value"},{"name":"value"},{"name":"value"}],
+    salesRound: "Image",
+    tokenInvested: "Number",
+    insuranceLock: "Number",
+    insuranceLockTime: "String",
+}
+
+const airdropCompany = {
+    honeyBiteSmartContract: "String",
+    tokenSmartContract: "String",
+    tokenName: "String",
+    tokenSymbol: "String",
+    projectDetails: "String",
+    totalSupply: "String",
+    chainType: "String",
+    TGE: "Number",
+    cliffPeriod: "Number",
+    linearVestPeriod: "String",
+    socialMedia: {
+        "Twitter": "String",
+        "Linkedin": "String",
+        "Youtube": "String",
+        "Website": "String",
+        "Instagram": "String"
+    },
+   commission: "Number",
+   totalTokens: "Number", //this will be calculated automatically
+   totalTokenAirdrop: "Number",
+   totalTokenPrize: "Number",
+   projectGuide: "String",
+   prize: [{"pricePostion": "Number","totalUser": "Number","userAddress": ["userWalletAddress","userWalletAddress"]}]
+}

@@ -1,21 +1,34 @@
 import { Card,CardHeader,Flex,Avatar,Spacer,Box,Heading,Text,IconButton,CardBody,CardFooter,Button, ButtonGroup } from "@chakra-ui/react";
 import {TiSocialLinkedin,TiSocialFacebook,TiSocialTwitter} from 'react-icons/ti';
 import {FaTelegramPlane} from 'react-icons/fa';
-import {AiOutlineGlobal} from 'react-icons/ai'
+import {AiOutlineGlobal} from 'react-icons/ai';
+import {Timestamp} from "firebase/firestore";
 import { Link } from "react-router-dom";
-const Cards = () =>{
+import { useEffect, useState } from "react";
+const Cards = ({data}) =>{
+const [remainingTime,setTime] = useState("0:00:000");
+
+useEffect(()=>{
+  const d = data.data.fcfsClose.toMillis() - Date.now();
+  const hours = Math.floor(d / 3600000); // 1 hour = 3600000 milliseconds
+const minutes = Math.floor((d % 3600000) / 60000); // 1 minute = 60000 milliseconds
+const t  = `${hours}:${minutes}:00`;
+setTime(t);
+},1000)
+
+  
     return (
 
         <>
-         <Link to="/project/ido">
-            <Card maxW={"360px"} bg={"#F1F1F1"} color="black">
+         <Link to={`/project/ido?id=${data.id}`}>
+            <Card id={data.id} maxW={"360px"} bg={"#F1F1F1"} color="black" borderRadius={"0"} shadow="0">
   <CardHeader>
     <Flex >
       <Flex flex='1' gap='2' alignItems='center' flexWrap='wrap'>
       
         <Box>
-          <Heading size='md'>MUON NETWORK</Heading>
-          <Text fontSize={"10"} color={"gray"}>$HAL</Text>
+          <Heading size='md'>{data.data.tokenName}</Heading>
+          <Text fontSize={"10"} color={"gray"}>${data.data.tokenSymbol}</Text>
          <Box h={"8px"}></Box>
           <ButtonGroup p="-2" >
           <IconButton
@@ -69,8 +82,7 @@ const Cards = () =>{
   </CardHeader>
   <CardBody>
     <Text fontSize={"14px"} mt="-8">
-     This is a Demo IDO of Muon Network, working on it and stay tune with us will be coming live soon.
-     This is our demo side hopw it will be a sucess soon
+    {data.data.projectDetails}
     </Text>
   </CardBody>
   <Flex pr={"24"} pl={"1"} >
@@ -79,7 +91,7 @@ const Cards = () =>{
   
   <Spacer />
   
-  <Text fontSize={"14px"} fontWeight={"bold"} pt="1px">$430000</Text>
+  <Text fontSize={"14px"} fontWeight={"bold"} pt="1px">{data.data.totalRaise} BNB</Text>
   
 </Flex>
 <Flex pr={"24"} pl={"1"}>
@@ -88,7 +100,7 @@ const Cards = () =>{
   
   <Spacer />
   
-  <Text fontSize={"12px"} fontWeight={"bold"} pt="1px">1COLN = 0.02 BUSD</Text>
+  <Text fontSize={"12px"} fontWeight={"bold"} pt="1px">1{data.data.tokenSymbol} = {data.data.tokenPrice} BNB</Text>
   
 </Flex>
 <Flex pr={"24"} pl={"1"}> 
@@ -97,20 +109,11 @@ const Cards = () =>{
   
   <Spacer />
  
-  <Text fontSize={"12px"} fontWeight={"bold"} pt="1px">Mar 24, 2023</Text>
+  <Text fontSize={"12px"} fontWeight={"bold"} pt="1px">{data.data.fcfsOpen.toDate().toLocaleString()}</Text>
  
 </Flex>
-  <CardFooter
-    justify='space-between'
-    flexWrap='wrap'
-    sx={{
-      '& > button': {
-        minW: '136px',
-      },
-    }}
-  >
+  {data.data.projectStatus === "upcoming" ? <CardFooter></CardFooter> : <Flex mt="0.5rem" textAlign={"center"} bg="#19492E" direction="column" color="white"><Text   fontSize={"12px"}>COUNTDOWN</Text><Text lineHeight={"0rem"} mt="0.25rem" mb="0.75rem" fontWeight={"bold"} fontSize={"14px"} >{remainingTime}</Text></Flex>}
   
-  </CardFooter>
 </Card> </Link>   
         </>
     );

@@ -2,59 +2,57 @@ import { Flex,Box,Text, Spacer ,IconButton,Collapse,Heading,Accordion,
     AccordionItem,
     AccordionButton,
     AccordionPanel,
-    AccordionIcon,} from "@chakra-ui/react";
+    AccordionIcon} from "@chakra-ui/react";
 import { useDisclosure} from '@chakra-ui/react';
 import {IoIosArrowDown} from 'react-icons/io';
 
-const ProjectDetail = (data) =>{
+const VentureProjectDetail = ({data}) =>{
     const { isOpen, onToggle } = useDisclosure()
-    if(data){
-      console.log(data)
-    }
+
+    console.log(data);
+
     return(<><Flex flexWrap={"wrap"} direction="column" >
-        <Box ml="58rem" color={"yellow.400"} fontWeight="black" fontSize={"18"}>{data.data.chainType}</Box>
+        <Box ml="58rem" color={"yellow.400"} fontWeight="black" fontSize={"18"}>{data.chainType}</Box>
         <Flex gap="14" lineHeight={"2rem"}>
-        <Box><Text fontWeight={"bold"} >IDO INFORMATION</Text>
+        <Box><Text fontWeight={"bold"} >Venture INFORMATION</Text>
         <Flex gap="6" mt="0.5rem">
-            <Text>FCFS Opens</Text><Spacer/><Text >{data.data.fcfsOpen}</Text>
+            <Text>Starting Date</Text><Spacer/><Text >{data.bidStartDate.toDate().toLocaleString()}</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Early Access</Text><Spacer/><Text >{`${data.data.earlyAccess}`}</Text>
+            <Text>Bidding Range</Text><Spacer/><Text >1 {data.tokenSymbol} = {data.bidRange.minValue} - {data.bidRange.maxValue} BNB</Text>
         </Flex>
         <Flex gap="6">
-            <Text>FCFS Closes</Text><Spacer/><Text >{data.data.fcfsClose}</Text>
+            <Text>Minimum Bidding Price</Text><Spacer/><Text >1HAL = 0.002 BNB</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Swap Rate</Text><Spacer/><Text >1HAL = {data.data.swapRate} BNB</Text>
+            <Text>Minimum Bidding Value</Text><Spacer/><Text >0.9 BNB</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Total Raise</Text><Spacer/><Text >{data.data.totalRaise}</Text>
+            <Text>KYC Requirement</Text><Spacer/><Text >{`${data.kycRequirement}`}</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Access Type</Text><Spacer/><Text >Private</Text>
+            <Text>Access Type</Text><Spacer/><Text >{data.accessType}</Text>
         </Flex>
-        <Flex gap="6">
-            <Text>KYC Requirements</Text><Spacer/><Text >{`${data.data.kycRequirement}`}</Text>
-        </Flex>
+       
         </Box>
         <Box ><Text fontWeight={"bold"} >TOKEN INFORMATION</Text>
         <Flex mt="0.5rem" gap="6">
-            <Text>Name</Text><Spacer/><Text >{data.data.tokenName}</Text>
+            <Text>Name</Text><Spacer/><Text >{data.tokenName}</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Token Symbol</Text><Spacer/><Text >{data.data.tokenSymbol}</Text>
+            <Text>Token Symbol</Text><Spacer/><Text >{data.tokenSymbol}</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Total Supply</Text><Spacer/><Text >{data.data.totalSupply}</Text>
+            <Text>Total Supply</Text><Spacer/><Text >{data.totalSupply}</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Vesting</Text><Spacer/><Text >{data.data.TGE}% TGE, then {data.data.cliffPeriod}% each month</Text>
+            <Text>Vesting</Text><Spacer/><Text >{data.TGE}% TGE, then {data.cliffPeriod}% each {data.linearVestingPeriod}</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Network</Text><Spacer/><Text >{data.data.chainType}</Text>
+            <Text>Network</Text><Spacer/><Text >{data.chainType}</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Insurance</Text><Spacer/><Text >YES</Text>
+            <Text>Insurance</Text><Spacer/><Text >{data.insurance.toString()}</Text>
         </Flex>
        
         </Box>
@@ -126,7 +124,10 @@ const ProjectDetail = (data) =>{
 </Accordion>
         </Box>
      </Collapse></Box></Flex>
-        </Flex></>)
+        </Flex>
+
+        
+        </>)
 }
 
-export default ProjectDetail
+export default VentureProjectDetail;

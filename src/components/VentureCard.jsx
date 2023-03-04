@@ -3,20 +3,21 @@ import {TiSocialLinkedin,TiSocialFacebook,TiSocialTwitter} from 'react-icons/ti'
 import {FaTelegramPlane} from 'react-icons/fa';
 import {AiOutlineGlobal} from 'react-icons/ai';
 import { Link } from "react-router-dom";
-const VentureCard = () =>{
+const VentureCard = ({data}) =>{
+  console.log(data);
     return (
 
         <>
-        <Link to="/project/venture">
-            <Card maxW={"360px"} bg={"#F1F1F1"} color="black">
+        <Link to={`/project/venture?id=${data.id}`}>
+            <Card maxW={"360px"} bg={"#F1F1F1"} color="black" borderRadius={"0"} shadow="0">
             
   <CardHeader>
     <Flex >
       <Flex flex='1' gap='2' alignItems='center' flexWrap='wrap'>
       
         <Box>
-          <Heading size='md'>MUON NETWORK</Heading>
-          <Text fontSize={"10"} color={"gray"}>$HAL</Text>
+          <Heading size='md'>{data.data.tokenName}</Heading>
+          <Text fontSize={"10"} color={"gray"}>${data.data.tokenSymbol}</Text>
          <Box h={"8px"}></Box>
           <ButtonGroup p="-2" >
           <IconButton
@@ -70,8 +71,7 @@ const VentureCard = () =>{
   </CardHeader>
   <CardBody>
     <Text fontSize={"14px"} mt="-8">
-     This is a Demo IDO of Muon Network, working on it and stay tune with us will be coming live soon.
-     This is our demo side hopw it will be a sucess soon
+    {data.data.projectDetails}
     </Text>
   <br></br>
 
@@ -81,7 +81,7 @@ const VentureCard = () =>{
   
 
  
-  <Text fontSize={"14px"} fontWeight={"bold"} pt="1px" >Mar 24, 2023</Text>
+  <Text fontSize={"14px"} fontWeight={"bold"} pt="1px" >{data.data.bidStartDate.toDate().toLocaleString().split(',')[0]}</Text>
  
 </Flex>
 <Flex gap="4"> 
@@ -90,13 +90,13 @@ const VentureCard = () =>{
   
 
  
-  <Text fontSize={"14px"} fontWeight={"bold"} pt="1px" >1WEW=0.01BUSD</Text>
+  <Text fontSize={"14px"} fontWeight={"bold"} pt="1px" >1 {data.data.tokenSymbol} = {data.data.bidRange.minValue} BNB</Text>
  
 </Flex>
 
 
 </CardBody>
-<Text textAlign={"center"} color="gray.400" fontSize={"12px"} pb="2">T&C: Need membership for placing a bid</Text> 
+<Flex p="0.5rem" direction={"column"} alignItems="center" bg="gray.900" justifyItems={"center"} color="gray.100" fontSize={"13px"} >Need membership for placing a bid</Flex> 
 </Card>  
 </Link>  
         </>

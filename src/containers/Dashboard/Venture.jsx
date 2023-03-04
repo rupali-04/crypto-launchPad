@@ -8,31 +8,165 @@ import { Link } from 'react-router-dom';
 import DashboardNav from "../../components/DashboardNav";
 import WalletDetails from "../../components/WalletDetails";
 import { useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import app from '../../firebaseDatabase';
+import { collection, query, where, getDoc, getDocs  } from "firebase/firestore";
+import {getFirestore,doc } from "firebase/firestore";
+import { useSelector } from "react-redux";
 
-const DashboardVenture = () => {
+const db = getFirestore(app);
+
+
+const DashboardVenture = ({data}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [r1,setR1] = useState(false);
-    return(<><p><Flex><SideBar/>
-     <Flex flexWrap={"wrap"} flexDirection={"column"}>
-        <WalletDetails/>
-        <DashboardNav data="venture"/>
+    const [loading,setLoading] = useState();
+    const [investmentData,setInvestment] = useState([]);
+    const [companyData,setCompany] = useState([]);
+    const [bids,setBid] = useState([]);
+    const [companyId,setId] = useState(-1);
+
+    useEffect(()=>{
+      getData();
+    },[data]);
+
+
+    const getData = async() =>{
+      setLoading(true);
+     
+      if(data){
+
+          try{
+            setInvestment([]);
+            setCompany([]);
+            console.log(data);
+            data.ventureInvestment.map(async (e,i)=>{
+              const investmentRef = collection(db, "investment");
+              const companyRef = collection(db, "company");
+              const biddingRef = collection(db, "Bidding");
+              // Reference the specific document by its ID
+              const documentRef = doc(investmentRef,e.investmentId);
+              const companyDoc = doc(companyRef,e.companyId);
+              const biddingDoc = doc(biddingRef,e.biddingId);
+             
+              // Reference the specific document by its ID
+             
+              
+              // Retrieve the data from the document
+              const d = await getDoc(documentRef);
+              const c = await getDoc(companyDoc);
+              const b = await getDoc(biddingDoc);
+
+              console.log("sssss",d.exists(), c.exists(),b.exists());
+                if(d.exists() && c.exists() && b.exists()){
+                  console.log("Venture",d.data(),c.data(),b.data());
+                  setInvestment([...investmentData,d.data()]);
+                  setCompany([...companyData,c.data()]);
+                  setBid([...bids,b.data()]);
+                }else{
+                  console.log("No Documents Found");
+                  setLoading(false);
+                }
+             
+              
+            })
+          
+          }catch(err){
+            console.log(err);
+          }
+        
+      setLoading(false);
+      console.log("end",data);
+      }
+    }
+
+    
+    let projectList = [];
+    if(loading != true && investmentData.length > 0 && companyData.length > 0){
+      console.log("investAir",investmentData,companyData);
+      projectList = [];
+     
+     investmentData.map((e,i)=>{
+      const t = <Flex mt="0.5rem">
+      <Box w="200px" textAlign={"center"} ><Button onClick={onOpen} variant={"none"} size={"md"} color="blue.400">{companyData[i].tokenName}</Button></Box>
+      <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>{bids[i].biddingValue} BNB</Text></Box>
+      <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>{bids[i].totalInvestment} BNB</Text></Box>
+      <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>{companyData[i].TGE}% At TGE {companyData[i].cliffPeriod}% Per Month</Text></Box>
+      <Box w="150px" textAlign={"center"} >{bids[i].status === "accepted" ? <Button borderRadius={"40"} variant={"link"} colorScheme="green" >Accepted</Button> : <Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Refund</Button>}</Box>
+      <Box  textAlign={"center"} >{bids[i].status === "accepted" ? <Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Tokens</Button> : <Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Refund</Button>}</Box>
+      
+      </Flex>
+      projectList.push(t);
+     })
+     console.log("pro",projectList);
+    }else if( loading != true && investmentData.length === 0 && companyData.length === 0){
+      console.log("dddd",investmentData.length,companyData.length);
+      projectList.push(<Flex mt="1rem">No Venture investment</Flex>);
+    }
+    else{
+      console.log("investmentData",investmentData);
+      projectList.push(<Flex mt="1rem">Loading.....</Flex>);
+    }
+  
+
+
+    return(<><p>
         <Flex p="2" flexWrap="wrap" justifyContent={"flex-start"}  >
-    <HStack spacing={"20"}  w={"max-content"} h={"max-content"} textAlign="center" p="2"  >
-
-
-<Box ><Text fontWeight={"bold"} size={"sm"}>Project Name</Text><Box pt="2"><Button  onClick={onOpen}  variant={"none"} size={"sm"} color="blue.400">MUON NETWORK</Button></Box><Box pt="2"><Button  variant={"none"} size={"sm"} color="blue.400">UKISS</Button></Box></Box> 
-<Box><Text fontWeight={"bold"} size={"sm"}>Bidding Price</Text><Text pt="4"  size={"sm"}>$0.02</Text><Text pt="4" size={"sm"}>$0.01</Text></Box>
-<Box><Text fontWeight={"bold"} size={"sm"}>Investment</Text><Text pt="4"  size={"sm"}>10,000 BUSD</Text><Text pt="4" size={"sm"}>1,000 BUSD</Text></Box>
-<Box><Text fontWeight={"bold"} size={"sm"}>View Status</Text><Box pt="2"><Button size={"sm"} variant="none"  color="green">ACCEPTED</Button></Box><Box pt="2"><Button size={"sm"} variant="none"  color="red">CANCELLED</Button></Box></Box>
-
-<Box><Text fontWeight={"bold"} size={"sm"}>Action</Text><Box pt="2"><Button borderRadius={"40"} size={"sm"} colorScheme="blue">Invest Now</Button></Box><Box pt="2"><Button borderRadius={"40"} size={"sm"} colorScheme="blue" disabled>Invest Now</Button></Box></Box>
-<Box><Text fontWeight={"bold"} size={"sm"}>Investment Countdown</Text><Text pt="4"  size={"sm"}>23:59:59</Text><Text pt="4" size={"sm"}>0:0:0</Text></Box>
-</HStack>
-
-
+        <Flex  justifyContent={"center"} direction="column">
+          <Flex fontWeight={"bold"}>
+                <Box w="200px" textAlign={"center"}><Text  >Token Name</Text></Box>
+                <Box w="200px" textAlign={"center"}><Text > Bidding Price</Text></Box>
+                <Box w="200px" textAlign={"center"}><Text >Investment</Text></Box>
+                <Box w="200px" textAlign={"center"}><Text >Vesting</Text></Box>
+                <Box w="150px" textAlign={"center"}><Text >View Status</Text></Box>
+                <Box  textAlign={"center"}><Text >Claim Details</Text></Box>
+                </Flex>
+                <Divider mt="1rem" h="0.09rem"  bg={"black"}/>
+                {loading != true && projectList.length > 0 ? projectList.map((e,i)=>{
+      
+                    console.log(e);
+                    return e;
+                  }) : "" }
+                {/* <Flex mt="0.5rem">
+                <Box w="200px" textAlign={"center"} ><Button onClick={onOpen} variant={"none"} size={"md"} color="blue.400">MUON NETWORK</Button></Box>
+                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>0.002 BNB</Text></Box>
+                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>12 BNB</Text></Box>
+                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>20% At TGE, 3 Months Cliff, 6% Per Month</Text></Box>
+                <Box w="150px" textAlign={"center"} ><Button borderRadius={"40"} variant={"link"} colorScheme="green" >Accepted</Button></Box>
+                <Box  textAlign={"center"} ><Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Tokens</Button></Box>
+                
+                </Flex>
+                <Flex mt="0.5rem">
+                <Box w="200px" textAlign={"center"}><Button onClick={onOpen} variant={"none"} size={"md"} color="blue.400">UKIZZ</Button></Box>
+                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>0.002 BNB</Text></Box>
+                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>12 BNB</Text></Box>
+                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>20% At TGE, 3 Months Cliff, 6% Per Month</Text></Box>
+                <Box w="150px" textAlign={"center"} ><Button borderRadius={"40"} variant={"link"} colorScheme="red" >Canceled</Button></Box>
+                <Box  textAlign={"center"} ><Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Refund</Button></Box>
+               
+                </Flex>*/}
+                
+<Flex direction={"column"}>
+  <Box w="max-content" bg="orange" p="0.5rem" color="white" fontWeight={"bold"} fontSize="16px" letterSpacing={1}> <Text>HONEY-BITE INSURANCE CLAIM DETAILS</Text></Box>
+<Flex fontWeight={"bold"} mt="1.5rem" textAlign={"center"}>
+  <Text w="200px">Token Name</Text>
+  <Text w="200px">Token Price</Text>
+  <Text w="200px">Investment</Text>
+  <Text w="200px">Claim percentage</Text>
+  <Text w="200px">Claim Amount</Text>
+  <Text >Claim Details</Text>
+</Flex>
+<Flex mt="1rem" textAlign={"center"}>
+  <Text w="200px">MUON NETWORK</Text>
+  <Text w="200px">0.002 BNB</Text>
+  <Text w="200px">10 BNB</Text>
+  <Text w="200px">30 %</Text>
+  <Text w="200px">3 BNB</Text>
+  <Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Token</Button>
 </Flex>
 </Flex>
+</Flex>
+
     </Flex>
     <Modal closeOnOverlayClick={false} isOpen={r1} onClose={false} isCentered size={"3xl"}>
         <ModalOverlay bg={"blackAlpha.400"}/>
@@ -105,7 +239,7 @@ const DashboardVenture = () => {
          </Flex>
          <Flex  >
           <Text color={"gray.300"}>BIDDING PRICE:</Text>
-          <Text ml="0.75rem">$0.02 USDT</Text>
+          <Text ml="0.75rem">0.02 BNB</Text>
          </Flex>
          <Flex  gap="4">
           <Text color={"gray.300"}>INVESTMENT AMOUNT:</Text>

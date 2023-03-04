@@ -3,20 +3,22 @@ import {TiSocialLinkedin,TiSocialFacebook,TiSocialTwitter} from 'react-icons/ti'
 import {FaTelegramPlane} from 'react-icons/fa';
 import {AiOutlineGlobal} from 'react-icons/ai';
 import { useDisclosure } from "@chakra-ui/react";
-const AirdropCard = () =>{
+const AirdropCard = ({data}) =>{
   const { isOpen, onOpen, onClose } = useDisclosure()
+  console.log("airdropData",data);
     return (
 
         <>
-            <Card  maxW={"360px"} bg={"#F1F1F1"} color="black" onClick={onOpen} cursor="pointer">
-            <Text bg={"black"} color="white" textAlign={"center"}>Airdrop Project</Text> 
-  <CardHeader>
-    <Flex >
+            <Card  maxW={"360px"} bg={"#F1F1F1"} color="black" shadow={"0"} cursor="pointer" borderRadius={"0"}>
+           
+  <CardHeader p="0">
+    <Box onClick={()=>{console.log("Print")}} bg="blue.400" textAlign={"center"} color="white">Price List</Box>
+    <Flex p="1rem" onClick={onOpen}>
       <Flex flex='1' gap='2' alignItems='center' flexWrap='wrap'>
       
         <Box>
-          <Heading size='md'>MUON NETWORK</Heading>
-          <Text fontSize={"10"} color={"gray"}>$HAL</Text>
+          <Heading size='md'>{data.data.tokenName}</Heading>
+          <Text fontSize={"10"} color={"gray"}>${data.data.tokenSymbol}</Text>
          <Box h={"8px"}></Box>
           <ButtonGroup p="-2" >
           <IconButton
@@ -68,10 +70,9 @@ const AirdropCard = () =>{
 
     </Flex>
   </CardHeader>
-  <CardBody>
+  <CardBody onClick={onOpen}>
     <Text fontSize={"14px"} mt="-8">
-     This is a Demo IDO of Muon Network, working on it and stay tune with us will be coming live soon.
-     This is our demo side hopw it will be a sucess soon
+    {data.data.projectDetails}
     </Text>
   <br></br>
 
@@ -81,11 +82,11 @@ const AirdropCard = () =>{
   
 
  
-  <Text fontSize={"14px"} fontWeight={"bold"} pt="1px" >Mar 24, 2023</Text>
+  <Text fontSize={"14px"} fontWeight={"bold"} pt="1px" >{data.data.startDate.toDate().toString().split('G')[0]}</Text>
  
 </Flex>
-</CardBody>
- 
+</CardBody >
+<Text bg={"#19492E"} color="white" textAlign={"center"}>Airdrop Project</Text> 
 </Card>   
 <Modal closeOnOverlayClick={false} isOpen={isOpen}  onClose={onClose} isCentered size={"3xl"} >
         <ModalOverlay bg={"blackAlpha.400"}/>

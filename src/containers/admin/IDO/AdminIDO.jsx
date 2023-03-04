@@ -19,7 +19,7 @@ const AdminIDO = () =>{
  
 return(<><p>
          <Flex><AdminBar/>
-<Flex flexWrap={"wrap"} ml="2rem" overflowX={"hidden"} flexDirection={"column"}>
+<Flex mt="1rem" ml="2rem" direction={"column"}>
  <Flex>
  <Flex m="1rem" fontSize={"24px"}></Flex><Spacer/>
      <Flex m="1rem" ><Box display='flex'   flexWrap={"wrap"} flexDirection={"column"}>
@@ -29,12 +29,12 @@ return(<><p>
   
  </Flex>
    
-    <Flex ml="1rem" direction={"column"}>
-    <HStack w={"max-content"} h={"max-content"}  pt="0" >
+    <Flex ml="1rem" w="100%" direction={"column"}>
+    <HStack w="100%" h={"max-content"}  pt="0" >
 
  
   
-<ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="1100px">
+<ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="100%">
  
   <Link to="/admin/dashboard/ido"><Button bg="#1F94FF" borderRadius={"0"} pl="2rem" pr="2rem" color="white">ADD NEW PROJECT</Button></Link>
   <Link to="/admin/dashboard/ido/open"><Button borderRadius={"0"} pl="2rem" pr="2rem">OPEN PROJECT</Button></Link>

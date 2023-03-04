@@ -9,6 +9,8 @@ import {FiFacebook} from 'react-icons/fi'
 import {TbBrandTelegram} from 'react-icons/tb'
 import {BsPersonCircle} from 'react-icons/bs';
 import {FiCopy} from 'react-icons/fi';
+import {ethers} from 'ethers';
+import Web3Modal from 'web3modal'
 import Logo from "../images/Logo.jpg";
 import {Collapse } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
@@ -17,22 +19,134 @@ import { Link} from 'react-router-dom';
 import { useDisclosure} from '@chakra-ui/react';
 import { useDispatch,useSelector } from 'react-redux';
 import { LOGIN, login, logout } from '../actions/auth';
+import app from '../firebaseDatabase';
+import { collection, query, where, getDoc,doc, setDoc, getDocs } from "firebase/firestore";
+import {getFirestore} from "firebase/firestore";
 
 
-  const SideBar = () => {
+const db = getFirestore(app);
+
+
+    const SideBar = () => {
+    const [a,setAddress] = useState(null);
+    const [c,setChain] = useState(null);
+    const [s,setSigner] = useState(null);
+    const [p,setProvider] = useState(null);
+    const [loading,setLoading] = useState(true);
+    const [userData,setUser] = useState(null);
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(state => state.isLoggedIn);
     const wallet = useSelector(state => state.wallet);
- 
+   
+    useEffect(() => {
+      
+     if(p){
+      window.ethereum.on("accountsChanged", (accounts) => {
+        onAccountChange(accounts[0]);
+      });
 
-  function handleLogin() {
+      window.ethereum.on("chainChanged", (chainId) => {
+        onAccountChange(chainId);
+      });
+     
+     }
+        
+      
+    }, [p]);
+
+    useEffect(()=>{
+      if(wallet){
+
+      
+      getData(wallet.address) 
+    }
+    },[wallet])
+
+    const getData = async (add) =>{
+      setLoading(true);
+      try{
+        const collectionRef = collection(db, "user");
+        const documentRef = doc(collectionRef,add);
+    
+        // Retrieve the data from the document
+        const d = await getDoc(documentRef);
+        console.log(d);
+          if(d.exists()){
+            console.log("Already user is added to database");
+          }
+          else{
+
+          
+            const insertData = {
+              kycStatus: false,
+              membershipStatus: false,
+              totalAirdropInvestment: {
+                Polygon: 0,
+                Ethereum: 0,
+                Binance: 0
+              },
+              totalAirdrops: {
+                Polygon: 0,
+                Ethereum: 0,
+                Binance: 0
+              },
+              totalIDOInvestment:{
+                Polygon: 0,
+                Ethereum: 0,
+                Binance: 0
+              },
+              totalVentureInvestment: {
+                Polygon: 0,
+                Ethereum: 0,
+                Binance: 0
+              },
+              userName: "username_undefined",
+              ventureInvestment: 0,
+              walletAddress: `${add}`,
+              idoInvestment: [],
+              airdropInvestment: [],
+              ventureInvestment: []
+            
+          }
+          await setDoc(doc(db, "user", add), insertData);
+         
+        }
+        setLoading(false);
+        
+      }catch(err){
+        console.log(err);
+      }
+     }
+  
+
+ 
+   
+  async function handleLogin() {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const add = await signer.getAddress();
+    const ch = await signer.getChainId();   
+    const sign = await signer.signMessage("Welcome to HoneyBite LaunchPad");
+    setProvider(provider);
+    setSigner(signer);
+    setChain(ch);
+   
+    
+    // console.log(add,c,s,p);
     dispatch({
       type: LOGIN,
-      item: {address: "0x495B7Fcb455d8539C59C092c8cca59EA86fbF374"}
+      item: {addres: add,chainId: ch,signer: signer}
     })
     dispatch(login());
   }
-
+  
+  const onAccountChange = async (newAccount) => {
+    
+   handleLogin();
+  };
+  
   function handleLogout() {
     dispatch(logout());
   }
@@ -75,7 +189,7 @@ import { LOGIN, login, logout } from '../actions/auth';
             {isLoggedIn === false ? <Box display='flex' alignItems={"center"} flexWrap={"wrap"} flexDirection={"column"}>  <Button onClick={handleLogin} leftIcon={<TfiWallet></TfiWallet>} fontSize="16px" size='lg' colorScheme={"twitter"} color="#3568dd" variant='outline' fontWeight={"300"} bg="#E2F4FF" w="250px">Connect Wallet</Button> 
                 <Text textAlign={"center"} color={"gray.400"} w="250px"  fontSize='10px'>Your Honey-Bite Launchpad experience will be limited without connecting</Text></Box>
                  : <Box display='flex' alignItems={"center"} flexWrap={"wrap"} flexDirection={"column"}>
-                  
+                 
                  <Button  leftIcon={<BsPersonCircle></BsPersonCircle>} size='lg'  colorScheme='gray' fontSize={"20"} variant='outline' isActive="false" bg="gray.200"> {wallet.address.substring(0, 5) + '....' + wallet.address.substring(38,wallet.address.length - 1)}
           <IconButton  fontSize={"14px"} pt="1"  aria-label='Copy button' variant={"none"} icon={<FiCopy />}/></Button> 
                  <Text textAlign={"center"} color={"lightgrey"} fontSize='xs'>Dec 3, 17:15 UTC</Text>

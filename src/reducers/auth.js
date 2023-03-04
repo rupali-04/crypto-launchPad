@@ -7,10 +7,11 @@ const initialState = {
 };
 
 export function authReducer(state = initialState, action) {
-    console.log(action);
+    
   switch (action.type) {
     case LOGIN:
-      return { ...state, isLoggedIn: true,wallet:{address: action.item.address} };
+      console.log(action);
+      return { ...state, isLoggedIn: true,wallet:{address: action.item.addres,chainId: action.item.chainId, signer: action.item.signer} };
     case LOGOUT:
       return { ...state, isLoggedIn: false,wallet:null };
     default:

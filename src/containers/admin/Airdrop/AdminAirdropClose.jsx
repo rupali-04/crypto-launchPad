@@ -29,12 +29,12 @@ const AdminAirdropClose = () =>{
   
  </Flex>
    
-    <Flex ml="1rem" direction={"column"}>
-    <HStack w={"max-content"} h={"max-content"}  pt="0" >
+    <Flex ml="1rem" direction={"column"} w="100%">
+    <HStack w={"100%"} h={"max-content"}  pt="0" >
 
  
   
-<ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="1100px">
+<ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="100%">
  
 <Link to="/admin/dashboard/airdrop"><Button  borderRadius={"0"} pl="2rem" pr="2rem" >ADD NEW AIRDROP</Button></Link>
   <Link to="/admin/dashboard/airdrop/open"><Button  borderRadius={"0"}  pl="2rem" pr="2rem">OPEN AIRDROP</Button></Link>

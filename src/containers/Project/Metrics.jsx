@@ -39,7 +39,7 @@ const ProjectMetrics = () =>{
     ];
    
     return(<>
-    <Flex direction="column" >
+    <Flex fontFamily={'Inter'} direction="column" >
         <Flex direction="column" ml="7rem" textAlign={"center"}>
         <Text fontWeight={"bold"} fontSize="24px">Documented token distribution</Text>
         <Text color={"gray"}>Data provided by project</Text>
@@ -67,7 +67,7 @@ const ProjectMetrics = () =>{
       <Legend />
       </PieChart>
       </Flex>
-      <Heading mt="1rem" size={"lg"} mb="1rem">Sales round details</Heading>
+      <Heading fontFamily={'Inter'} mt="1rem" size={"lg"} mb="1rem">Sales round details</Heading>
       <Flex>
         <Text w="150px"></Text>
         <Text w="150px" color={"gray.500"}>Price</Text>

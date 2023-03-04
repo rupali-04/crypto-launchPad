@@ -4,7 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import {BrowserRouter as Router, Routes, Route,Redirect } from "react-router-dom";
 import HomePage from './pages/HomePage';
 import ActivePage from './pages/ActivePage';
-import IDOPage from './containers/Dashboard/IDOPage';
+import Home from './containers/Dashboard/Home';
 import Airdrop from './pages/Airdrop';
 import Membership from './pages/Membership';
 import Venture from './containers/Venture/Venture';
@@ -69,7 +69,7 @@ const App = () => {
      
       
        {isLoggedIn === false ?  <>
-        </> :  <><Route path="/dashboard" element={<IDOPage/>}/><Route path="dashboard/venture" element={<DashboardVenture/>}/>
+        </> :  <><Route path="/dashboard" element={<Home/>}/><Route path="dashboard/venture" element={<DashboardVenture/>}/>
         <Route path="dashboard/airdrop" element={<DashboardAirdrop/>}/><Route path="dashboard/profile/kyc" element={<ProfileKyc/>}/>
         <Route path="/company/dashboard" element={<CompanyPanel/>}/>
         <Route path="/admin/dashboard" element={<AdminPanel/>}/>

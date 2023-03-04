@@ -34,7 +34,7 @@ const AdminVentureClose = () =>{
 
  
   
-<ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="1100px">
+<ButtonGroup bg="gray.200" gap="4" variant='unstyled' >
  
 <Link to="/admin/dashboard/venture"><Button  borderRadius={"0"} pl="2rem" pr="2rem">ADD NEW VENTURE</Button></Link>
   <Link to="/admin/dashboard/venture/open"><Button borderRadius={"0"} pl="2rem" pr="2rem">OPEN VENTURE</Button></Link>

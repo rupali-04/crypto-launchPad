@@ -34,7 +34,7 @@ const AdminAirdropEdit = () =>{
 
  
   
-<ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="1100px">
+<ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="100%" >
  
 <Link to="/admin/dashboard/airdrop"><Button  borderRadius={"0"} pl="2rem" pr="2rem"  >ADD NEW AIRDROP</Button></Link>
   <Link to="/admin/dashboard/airdrop/open"><Button  borderRadius={"0"} bg="#1F94FF" color="white" pl="2rem" pr="2rem">OPEN AIRDROP</Button></Link>

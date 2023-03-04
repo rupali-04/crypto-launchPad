@@ -29,12 +29,12 @@ return(<><p>
   
  </Flex>
    
-    <Flex ml="1rem" flexWrap={"wrap"} direction={"column"} >
-    <HStack w={"max-content"} h={"max-content"} flexWrap={"wrap"}  pt="0" >
+    <Flex ml="1rem" flexWrap={"wrap"} direction={"column"} w="100%">
+    <HStack w={"100%"} h={"max-content"} flexWrap={"wrap"}  pt="0" >
 
  
   
-<ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="1100px">
+<ButtonGroup bg="gray.200" gap="4" variant='unstyled' w="100%">
  
   <Link to="/admin/dashboard/airdrop"><Button bg="#1F94FF" borderRadius={"0"} pl="2rem" pr="2rem" color="white">ADD NEW AIRDROP</Button></Link>
   <Link to="/admin/dashboard/airdrop/open"><Button borderRadius={"0"} pl="2rem" pr="2rem">OPEN AIRDROP</Button></Link>

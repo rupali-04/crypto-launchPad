@@ -1,17 +1,24 @@
 import { Card,CardHeader,Flex,Avatar,Spacer,Box,Heading,Text,IconButton,CardBody,CardFooter,Button, ButtonGroup } from "@chakra-ui/react";
 import {TiSocialLinkedin,TiSocialFacebook,TiSocialTwitter} from 'react-icons/ti';
 import {FaTelegramPlane} from 'react-icons/fa';
-import {AiOutlineGlobal} from 'react-icons/ai'
+import {AiOutlineGlobal} from 'react-icons/ai';
+import { useEffect, useState } from "react";
 
-const Details = () =>{
-    return (<> <Card bg="white" variant = {"filled"} maxW={"360px"} color="black">
-    <CardHeader>
+
+
+const Details = (data) =>{
+  
+  useEffect(()=>{
+    console.log(data.data.tokenName);
+  },[])
+    return (<> <Card fontFamily={'Inter'} bg="white" variant = {"filled"} maxW={"360px"} color="black">
+    <CardHeader fontFamily={'Inter'}>
       <Flex >
         <Flex flex='1' gap='2' alignItems='center' flexWrap='wrap'>
         
           <Box>
-            <Heading size='md'>MUON NETWORK</Heading>
-            <Text fontSize={"10"} color={"gray"}>$HAL</Text>
+            <Heading fontFamily={'Inter'} size='md'>{data.data.tokenName}</Heading>
+            <Text fontSize={"10"} color={"gray"}>${data.data.tokenSymbol}</Text>
            <Box h={"8px"}></Box>
             <ButtonGroup p="-2" >
             <IconButton
@@ -63,10 +70,8 @@ const Details = () =>{
   
       </Flex>
     </CardHeader>
-    <CardBody>
-      <Text fontSize={"14px"} mt="-8">
-       This is a Demo IDO of Muon Network, working on it and stay tune with us will be coming live soon.
-       This is our demo side hopw it will be a sucess soon
+    <CardBody >
+      <Text fontSize={"14px"} mt="-8">{data != null ? data.data.projectDetails : ""}
       </Text>
     </CardBody>
     
