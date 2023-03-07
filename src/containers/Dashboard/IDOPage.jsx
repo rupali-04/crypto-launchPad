@@ -76,8 +76,8 @@ const IDOPage = ({data}) => {
       console.log("invest",investmentData,companyData);
       projectList =  <HStack  w={"max-content"} h={"max-content"} textAlign="center"  >
   <Box w="150px" pt="2"><Button onClick={onOpen} variant={"none"} size={"sm"} color="blue.400">{companyData[0].tokenName}</Button></Box> 
-  <Box w="150px"><Text pt="4" size={"sm"}>{investmentData[0].tokenPrice} BNB</Text></Box>
-  <Box w="150px"><Text pt="4" size={"sm"}>{investmentData[0].totalHolding} BNB</Text></Box>
+  <Box w="150px"><Text pt="4" size={"sm"}>{investmentData[0].tokenPrice} FTM</Text></Box>
+  <Box w="150px"><Text pt="4" size={"sm"}>{investmentData[0].totalHolding} FTM</Text></Box>
   <Box w="150px"><Text pt="4"  size={"sm"}>{investmentData[0].totalTokensHold}</Text></Box>
   <Box w="150px"><Text pt="4" size={"sm"}>{investmentData[0].totalClaimed}%</Text></Box>
   <Box w="250px"><Box pt="2"><Button size={"sm"}  colorScheme="blackAlpha">Add</Button></Box></Box>
@@ -132,7 +132,7 @@ const IDOPage = ({data}) => {
                  
                   var allocationList = <Flex  justifyContent={"center"}>
                   <Text textAlign={"center"} w="250px">{i+1}</Text>
-                  <Text textAlign={"center"} w="250px">{e.Amount}</Text>
+                  <Text textAlign={"center"} w="250px">{e.Allocation}</Text>
                   <Text textAlign={"center"} w="250px">{e.Percentage}</Text>
                   <Text textAlign={"center"} w="250px">{e.claimDate.toDate().toString().split('G')[0]}</Text>
                   <Box textAlign={"center"} w="250px">{e.status == false ? <Text>Not Claimed</Text> : <Text>Claimed</Text>}</Box>

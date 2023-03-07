@@ -114,9 +114,9 @@ const CompanyPanel = () =>{
     <Text w="100px">1</Text>
     <Text w="100px">Script Network</Text>
     <Text w="150px">0xdafea4....98bc5 </Text>
-    <Text w="100px">200 BNB</Text>
-    <Text w="150px">20 BNB</Text>
-    <Text w="150px">25 BNB</Text>
+    <Text w="100px">200 FTM</Text>
+    <Text w="150px">20 FTM</Text>
+    <Text w="150px">25 FTM</Text>
     <Button w="100px" size={"sm"} bg="blue.400" color={"white"} borderRadius="40px">Claim Amount</Button>
     <Text w="100px">90 Days</Text>
   </Flex>

@@ -1,9 +1,10 @@
-import { LOGIN, LOGOUT } from '../actions/auth';
+import { LOGIN, LOGOUT,Role } from '../actions/auth';
 import React, {createContext, useContext, useReducer} from "react";
 
 const initialState = {
   isLoggedIn: false,
-  wallet: null
+  wallet: null,
+  role: null
 };
 
 export function authReducer(state = initialState, action) {
@@ -13,7 +14,10 @@ export function authReducer(state = initialState, action) {
       console.log(action);
       return { ...state, isLoggedIn: true,wallet:{address: action.item.addres,chainId: action.item.chainId, signer: action.item.signer} };
     case LOGOUT:
-      return { ...state, isLoggedIn: false,wallet:null };
+      return { ...state, isLoggedIn: false,wallet:null,role: null };
+    case Role:
+      console.log(action);
+      return {...state,role: action.item.appRole};
     default:
       return state;
   }

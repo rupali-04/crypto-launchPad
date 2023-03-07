@@ -27,6 +27,8 @@ const DashboardVenture = ({data}) => {
     const [companyId,setId] = useState(-1);
 
     useEffect(()=>{
+      setCompany([]);
+      setInvestment([]);
       getData();
     },[data]);
 
@@ -87,15 +89,37 @@ const DashboardVenture = ({data}) => {
       projectList = [];
      
      investmentData.map((e,i)=>{
-      const t = <Flex mt="0.5rem">
+      const t = <Box><Flex mt="0.5rem">
       <Box w="200px" textAlign={"center"} ><Button onClick={onOpen} variant={"none"} size={"md"} color="blue.400">{companyData[i].tokenName}</Button></Box>
-      <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>{bids[i].biddingValue} BNB</Text></Box>
-      <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>{bids[i].totalInvestment} BNB</Text></Box>
+      <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>{bids[i].biddingValue} FTM</Text></Box>
+      <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>{bids[i].totalInvestment} FTM  </Text></Box>
       <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>{companyData[i].TGE}% At TGE {companyData[i].cliffPeriod}% Per Month</Text></Box>
       <Box w="150px" textAlign={"center"} >{bids[i].status === "accepted" ? <Button borderRadius={"40"} variant={"link"} colorScheme="green" >Accepted</Button> : <Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Refund</Button>}</Box>
       <Box  textAlign={"center"} >{bids[i].status === "accepted" ? <Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Tokens</Button> : <Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Refund</Button>}</Box>
       
       </Flex>
+      { bids[i].insuranceStatus === true ? 
+      <Flex direction={"column"}>
+      <Box w="max-content" bg="orange" p="0.5rem" color="white" fontWeight={"bold"} fontSize="16px" letterSpacing={1}> <Text>HONEY-BITE INSURANCE CLAIM DETAILS</Text></Box>
+    <Flex fontWeight={"bold"} mt="1.5rem" textAlign={"center"}>
+      <Text w="200px">Token Name</Text>
+      <Text w="200px">Token Price</Text>
+      <Text w="200px">Investment</Text>
+      <Text w="200px">Claim percentage</Text>
+      <Text w="200px">Claim Amount</Text>
+      <Text >Claim Details</Text>
+    </Flex>
+    <Flex mt="1rem" textAlign={"center"}>
+      <Text w="200px">{companyData[i].tokenName}</Text>
+      <Text w="200px">{bids[i].biddingValue} FTM</Text>
+      <Text w="200px">{bids[i].totalInvestment} FTM</Text>
+      <Text w="200px">{companyData[i].insurancePercentage} %</Text>
+      <Text w="200px">{bids[i].totalInvestment * companyData[i].insurancePercentage / 100} FTM</Text>
+      <Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Token</Button>
+    </Flex>
+    </Flex> : ""
+     }
+    </Box>
       projectList.push(t);
      })
      console.log("pro",projectList);
@@ -129,8 +153,8 @@ const DashboardVenture = ({data}) => {
                   }) : "" }
                 {/* <Flex mt="0.5rem">
                 <Box w="200px" textAlign={"center"} ><Button onClick={onOpen} variant={"none"} size={"md"} color="blue.400">MUON NETWORK</Button></Box>
-                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>0.002 BNB</Text></Box>
-                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>12 BNB</Text></Box>
+                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>0.002 FTM</Text></Box>
+                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>12 FTM</Text></Box>
                 <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>20% At TGE, 3 Months Cliff, 6% Per Month</Text></Box>
                 <Box w="150px" textAlign={"center"} ><Button borderRadius={"40"} variant={"link"} colorScheme="green" >Accepted</Button></Box>
                 <Box  textAlign={"center"} ><Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Tokens</Button></Box>
@@ -138,33 +162,15 @@ const DashboardVenture = ({data}) => {
                 </Flex>
                 <Flex mt="0.5rem">
                 <Box w="200px" textAlign={"center"}><Button onClick={onOpen} variant={"none"} size={"md"} color="blue.400">UKIZZ</Button></Box>
-                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>0.002 BNB</Text></Box>
-                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>12 BNB</Text></Box>
+                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>0.002 FTM</Text></Box>
+                <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>12 FTM</Text></Box>
                 <Box w="200px" textAlign={"center"} mt="0.25rem"><Text>20% At TGE, 3 Months Cliff, 6% Per Month</Text></Box>
                 <Box w="150px" textAlign={"center"} ><Button borderRadius={"40"} variant={"link"} colorScheme="red" >Canceled</Button></Box>
                 <Box  textAlign={"center"} ><Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Refund</Button></Box>
                
                 </Flex>*/}
                 
-<Flex direction={"column"}>
-  <Box w="max-content" bg="orange" p="0.5rem" color="white" fontWeight={"bold"} fontSize="16px" letterSpacing={1}> <Text>HONEY-BITE INSURANCE CLAIM DETAILS</Text></Box>
-<Flex fontWeight={"bold"} mt="1.5rem" textAlign={"center"}>
-  <Text w="200px">Token Name</Text>
-  <Text w="200px">Token Price</Text>
-  <Text w="200px">Investment</Text>
-  <Text w="200px">Claim percentage</Text>
-  <Text w="200px">Claim Amount</Text>
-  <Text >Claim Details</Text>
-</Flex>
-<Flex mt="1rem" textAlign={"center"}>
-  <Text w="200px">MUON NETWORK</Text>
-  <Text w="200px">0.002 BNB</Text>
-  <Text w="200px">10 BNB</Text>
-  <Text w="200px">30 %</Text>
-  <Text w="200px">3 BNB</Text>
-  <Button borderRadius={"40"}  size="sm" colorScheme="blue">Claim Token</Button>
-</Flex>
-</Flex>
+
 </Flex>
 
     </Flex>
@@ -239,7 +245,7 @@ const DashboardVenture = ({data}) => {
          </Flex>
          <Flex  >
           <Text color={"gray.300"}>BIDDING PRICE:</Text>
-          <Text ml="0.75rem">0.02 BNB</Text>
+          <Text ml="0.75rem">0.02 FTM</Text>
          </Flex>
          <Flex  gap="4">
           <Text color={"gray.300"}>INVESTMENT AMOUNT:</Text>

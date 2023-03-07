@@ -34,6 +34,7 @@ const DashboardAirdrop = ({data}) => {
           try{
             setInvestment([]);
             setCompany([]);
+            console.log(investmentData,companyData,"tryyyy");
             data.airdropInvestment.map(async (e,i)=>{
               const investmentRef = collection(db, "investment");
     
@@ -79,8 +80,8 @@ const DashboardAirdrop = ({data}) => {
      investmentData.map((e,i)=>{
       const t = <Flex key={i} justifyContent="center" >
       <Box w="150px" textAlign={"center"} pt="2"><Button onClick={()=>{onOpen();setId(i)}} variant={"none"} size={"sm"} color="blue.400">{e.companyName}</Button></Box> 
-      <Box w="150px" textAlign={"center"}><Text pt="4">{e.airdropPrice} BNB</Text></Box>
-      <Box w="150px" textAlign={"center"}><Text pt="4">{e.investmentTokens} BNB</Text></Box>
+      <Box w="150px" textAlign={"center"}><Text pt="4">{e.airdropPrice} FTM</Text></Box>
+      <Box w="150px" textAlign={"center"}><Text pt="4">{e.investmentTokens} FTM</Text></Box>
       <Box w="150px" textAlign={"center"}><Text pt="4">{companyData[i].cliffPeriod}</Text></Box>
       <Box w="150px" textAlign={"center"}><Text pt="4"></Text>{`${e.winnerStatusDetails.status}`}</Box>
       <Box w="250px" textAlign={"center"}><Box pt="2"><Button size={"sm"}  colorScheme="blackAlpha">Add</Button></Box></Box>

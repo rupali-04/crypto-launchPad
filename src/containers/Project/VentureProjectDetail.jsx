@@ -19,13 +19,13 @@ const VentureProjectDetail = ({data}) =>{
             <Text>Starting Date</Text><Spacer/><Text >{data.bidStartDate.toDate().toLocaleString()}</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Bidding Range</Text><Spacer/><Text >1 {data.tokenSymbol} = {data.bidRange.minValue} - {data.bidRange.maxValue} BNB</Text>
+            <Text>Bidding Range</Text><Spacer/><Text >1 {data.tokenSymbol} = {data.bidRange.minValue} - {data.bidRange.maxValue} FTM</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Minimum Bidding Price</Text><Spacer/><Text >1HAL = 0.002 BNB</Text>
+            <Text>Minimum Bidding Price</Text><Spacer/><Text >1 {data.tokenSymbol} = {data.minBidPrice} FTM</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Minimum Bidding Value</Text><Spacer/><Text >0.9 BNB</Text>
+            <Text>Minimum Bidding Value</Text><Spacer/><Text >{data.minBidValue} FTM</Text>
         </Flex>
         <Flex gap="6">
             <Text>KYC Requirement</Text><Spacer/><Text >{`${data.kycRequirement}`}</Text>

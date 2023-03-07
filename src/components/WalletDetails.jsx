@@ -60,16 +60,16 @@ const WalletDetails = (data) =>{
    </Flex>
    <Flex wrap={"wrap"} direction="row" p="2rem" pt="1rem">
   
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Total IDO Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalIDOInvestment.Ethereum} BNB</Text></Box><Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Total IDO Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalIDOInvestment.Ethereum} FTM</Text></Box><Spacer/>
    
  
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Airdrop Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalAirdropInvestment.Ethereum} BNB</Text></Box><Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Airdrop Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalAirdropInvestment.Ethereum} FTM</Text></Box><Spacer/>
    
  
     <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"}>No. of Airdrop</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalAirdrops.Ethereum}</Text></Box><Spacer/>
    
   
-    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Honey-Bite Venture Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalVentureInvestment.Ethereum} BNB</Text></Box><Spacer/>
+    <Box bg="gray.100" textAlign={"center"} p="1.5rem"><Text fontWeight={"bold"} >Honey-Bite Venture Investment</Text><Text fontWeight={"bold"} color={"#1F94FF"}>{data.data.totalVentureInvestment.Ethereum} FTM</Text></Box><Spacer/>
    
 </Flex>
     </>)

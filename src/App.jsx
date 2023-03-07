@@ -53,6 +53,7 @@ import AdminVentureClose from './containers/admin/Venture/AdminVentureClose';
 
 const App = () => {
   const isLoggedIn = useSelector(state => state.isLoggedIn);
+  const appRole = useSelector(state => state.role);
   useEffect(()=>{
     console.log(isLoggedIn);
   },[])
@@ -68,11 +69,8 @@ const App = () => {
       
      
       
-       {isLoggedIn === false ?  <>
-        </> :  <><Route path="/dashboard" element={<Home/>}/><Route path="dashboard/venture" element={<DashboardVenture/>}/>
-        <Route path="dashboard/airdrop" element={<DashboardAirdrop/>}/><Route path="dashboard/profile/kyc" element={<ProfileKyc/>}/>
-        <Route path="/company/dashboard" element={<CompanyPanel/>}/>
-        <Route path="/admin/dashboard" element={<AdminPanel/>}/>
+       {isLoggedIn === false  ?  <>
+        </> : appRole != null ? appRole === "Admin" ? <><Route path="/admin/dashboard" element={<AdminPanel/>}/>
         <Route path="/admin/dashboard/ido" element={<AdminIDO/>}/>
         <Route path="/admin/dashboard/ido/open" element={<AdminIDOOpen/>}/>
         <Route path="/admin/dashboard/airdrop" element={<AdminAirdrop/>}/>
@@ -98,8 +96,11 @@ const App = () => {
         <Route path="admin/dashboard/commission" element={<AdminCommision/>}/>
         <Route path="/admin/dashboard/airdrop/close" element={<AdminAirdropClose/>}/>
         <Route path="/admin/dashboard/ido/close" element={<AdminIDOClose/>}/>
-        <Route path="/admin/dashboard/venture/close" element={<AdminVentureClose/>}/>
-        </> }
+        <Route path="/admin/dashboard/venture/close" element={<AdminVentureClose/>}/> </> : appRole === "user" ? <><Route path="/dashboard" element={<Home/>}/><Route path="dashboard/venture" element={<DashboardVenture/>}/>
+        <Route path="dashboard/airdrop" element={<DashboardAirdrop/>}/><Route path="dashboard/profile/kyc" element={<ProfileKyc/>}/>
+        <Route path="/company/dashboard" element={<CompanyPanel/>}/> </>  :    "" : ""
+        
+        }
         <Route path="/project/ido" element={<MainProject/>}/>
         <Route path="/project/venture" element={<VentureProject/>}/>
        

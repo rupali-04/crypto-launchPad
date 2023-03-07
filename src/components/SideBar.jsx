@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { Link} from 'react-router-dom';
 import { useDisclosure} from '@chakra-ui/react';
 import { useDispatch,useSelector } from 'react-redux';
-import { LOGIN, login, logout } from '../actions/auth';
+import { LOGIN, login, logout,Role,role } from '../actions/auth';
 import app from '../firebaseDatabase';
 import { collection, query, where, getDoc,doc, setDoc, getDocs } from "firebase/firestore";
 import {getFirestore} from "firebase/firestore";
@@ -36,10 +36,12 @@ const db = getFirestore(app);
     const [userData,setUser] = useState(null);
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(state => state.isLoggedIn);
+    const isRole = useSelector(state => state.role);
     const wallet = useSelector(state => state.wallet);
+    const [r,setRole] = useState('user');
    
     useEffect(() => {
-      
+      console.log("Role",isRole);
      if(p){
       window.ethereum.on("accountsChanged", (accounts) => {
         onAccountChange(accounts[0]);
@@ -55,11 +57,13 @@ const db = getFirestore(app);
     }, [p]);
 
     useEffect(()=>{
-      if(wallet){
-
+    
+      if(wallet ){
+        getData(wallet.address)   
+      }
       
-      getData(wallet.address) 
-    }
+      
+    
     },[wallet])
 
     const getData = async (add) =>{
@@ -72,6 +76,24 @@ const db = getFirestore(app);
         const d = await getDoc(documentRef);
         console.log(d);
           if(d.exists()){
+            if(d.data().userName === "Admin"){
+              dispatch({
+                type: Role,
+                item: {appRole: "Admin"}
+              })
+              dispatch(role());
+           
+            }else{
+              dispatch({
+                type: Role,
+                item: {appRole: "user"}
+              })
+              dispatch(role());
+           
+            }
+              
+            
+            
             console.log("Already user is added to database");
           }
           else{
@@ -202,10 +224,10 @@ const db = getFirestore(app);
 
                <br></br>
                
-             {isLoggedIn === false ? "" :  <Link to="/dashboard"><Text mt="0.5rem" color={"blue.400"} >Dashboard</Text></Link>}   
-             {isLoggedIn === false ? "" :  <Link to="/profile"><Text mt="0.5rem" >Profile</Text></Link>}   
+             {isLoggedIn === false && isRole === null ? "" : isRole === "user" && loading != false ? <><Link to="/dashboard"><Text mt="0.5rem" color={"blue.400"} >Dashboard</Text></Link></> : ""}   
+             {/* {isLoggedIn === false && isRole === "admin" ? "" :  <Link to="/profile"><Text mt="0.5rem" >Profile</Text></Link>}    */}
              
-             {isLoggedIn === false ? "" : <Link to="/admin/dashboard">  <Text mt="0.5rem" >Admin Panel</Text> </Link>}
+             {isLoggedIn === false && isRole === null ? "" : isRole === "Admin" && loading != false ? <Link to="/admin/dashboard">  <Text mt="0.5rem" >Admin Panel</Text> </Link> : ""}
              {isLoggedIn === false ? "" : <Link to="/company/dashboard">   <Text mt="0.5rem">Company Panel</Text></Link>}
               <Link to="/">  <Text mt="0.5rem" >All Project</Text> </Link>
               <Link to="/airdrop">   <Text mt="0.5rem">Airdrop</Text></Link>

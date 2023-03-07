@@ -16,16 +16,16 @@ const ProjectDetail = (data) =>{
         <Flex gap="14" lineHeight={"2rem"}>
         <Box><Text fontWeight={"bold"} >IDO INFORMATION</Text>
         <Flex gap="6" mt="0.5rem">
-            <Text>FCFS Opens</Text><Spacer/><Text >{data.data.fcfsOpen}</Text>
+            <Text>FCFS Opens</Text><Spacer/><Text >{data.data.fcfsOpen.toDate().toString().split('G')[0]}</Text>
         </Flex>
         <Flex gap="6">
             <Text>Early Access</Text><Spacer/><Text >{`${data.data.earlyAccess}`}</Text>
         </Flex>
         <Flex gap="6">
-            <Text>FCFS Closes</Text><Spacer/><Text >{data.data.fcfsClose}</Text>
+            <Text>FCFS Closes</Text><Spacer/><Text >{data.data.fcfsClose.toDate().toString().split('G')[0]}</Text>
         </Flex>
         <Flex gap="6">
-            <Text>Swap Rate</Text><Spacer/><Text >1HAL = {data.data.swapRate} BNB</Text>
+            <Text>Swap Rate</Text><Spacer/><Text >1HAL = {data.data.swapRate} FTM</Text>
         </Flex>
         <Flex gap="6">
             <Text>Total Raise</Text><Spacer/><Text >{data.data.totalRaise}</Text>
