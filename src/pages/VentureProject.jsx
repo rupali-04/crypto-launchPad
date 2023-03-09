@@ -119,8 +119,9 @@ const saveToDB = async (tx) => {
       await tx.wait();
        console.log(tx);
        saveToDB(tx);
-     
-    }catch(err){
+       onClose();  
+        alert("Congratulations Your Bid is Registred!!");
+          }catch(err){
       console.log(err);
     }
     

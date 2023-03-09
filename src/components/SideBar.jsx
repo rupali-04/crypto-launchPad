@@ -228,9 +228,9 @@ const db = getFirestore(app);
              {/* {isLoggedIn === false && isRole === "admin" ? "" :  <Link to="/profile"><Text mt="0.5rem" >Profile</Text></Link>}    */}
              
              {isLoggedIn === false && isRole === null ? "" : isRole === "Admin" && loading != false ? <Link to="/admin/dashboard">  <Text mt="0.5rem" >Admin Panel</Text> </Link> : ""}
-             {isLoggedIn === false ? "" : <Link to="/company/dashboard">   <Text mt="0.5rem">Company Panel</Text></Link>}
+             {/* {isLoggedIn === false ? "" : <Link to="/company/dashboard">   <Text mt="0.5rem">Company Panel</Text></Link>} */}
               <Link to="/">  <Text mt="0.5rem" >All Project</Text> </Link>
-              <Link to="/airdrop">   <Text mt="0.5rem">Airdrop</Text></Link>
+              {/* <Link to="/airdrop">   <Text mt="0.5rem">Airdrop</Text></Link> */}
              <Link to="/venture"> <Text mt="0.5rem">Honey-Bite Venture</Text> </Link>
                 <Link to="/membership">   <Text mt="0.5rem">Membership</Text></Link>
              
