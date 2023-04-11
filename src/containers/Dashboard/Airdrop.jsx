@@ -20,6 +20,7 @@ const DashboardAirdrop = ({data}) => {
     const [investmentData,setInvestment] = useState([]);
     const [companyData,setCompany] = useState([]);
     const [companyId,setId] = useState(-1);
+    
 
     useEffect(()=>{
       getData();

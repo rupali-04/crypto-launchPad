@@ -2,11 +2,55 @@ import SideBar from "../components/SideBar";
 import { Heading,Flex,Text,Box } from "@chakra-ui/react";
 import MembershipNav from "../components/MembershipNav";
 import MembershipCard from "../components/MembershipCard";
-const Membership = () => {
-    const d1 = {type: "VENTURE SPECIAL",price: "$350",total:"3 Ventures",description: "This plan helps you with ventures Investment benifits that helps you to get some exclusive benifits for the ventures", h1: "Ventures Invest", value1: "5 Ventures Only", h2: "Bidding Limit", value2: "5", h3: "Investment Limit", value3: "No Limit" };
-    const d2 = {type: "IDO SPECIAL",price: "0.1 FTM",total:"1 IDOs",description: "This plan helps you with IDOs Investment benifits that helps you to get some exclusive benifits for the IDOs", h1: "Investment Limit", value1: "$1000 Per IDOs", h2: "Early Access", value2: "24 Hr", h3: "Time Limit", value3: "NO" };
+import app from '../firebaseDatabase';
+import { collection, query, where, getDoc,getDocs,doc } from "firebase/firestore";
+import {getFirestore} from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
-    return(<><p><Flex  fontFamily={'Inter'}><SideBar/>
+const db = getFirestore(app);
+
+const Membership = () => {
+    const [loading,setLoading] = useState(true);
+    const [membershipData,setMembership] = useState([]);
+
+    useEffect(()=>{
+    
+        getData();
+      }, []);
+
+
+      const getData = async () =>{
+        setLoading(true);
+        try{
+            let querySnapshot = null;
+            const dataRef = collection(db,'membership');
+            querySnapshot =  await getDocs(dataRef);
+            console.log(querySnapshot)
+            if (querySnapshot != null && loading != false) {
+                const newData = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                  }));
+                  setMembership(newData);
+              
+               
+                
+                setLoading(false)      
+        }else{
+            console.log("No docs ");
+            setLoading(false);  
+        }
+        //setLoading(false);  
+        }catch(err){
+            console.log(err)
+        }
+        
+      };
+
+     
+    
+    return(<><p><Flex  fontFamily={'Inter'}><SideBar d={"membership"}/>
     
     <Flex flexWrap={"wrap"} ml="3rem"  w="100%"  flexDirection={"column"}>
         <MembershipNav data={"all"}/>
@@ -15,7 +59,15 @@ const Membership = () => {
            
             <Flex  mt="1rem"  flexWrap={"wrap"} gap='10' alignItems='center' >
             {/* <MembershipCard data={d1} />   */}
-            <MembershipCard data={d2} />
+            {membershipData.length != 0 && loading != true ? 
+                membershipData.map((e) => {
+                    console.log(membershipData);
+                    return   <MembershipCard key={e.id} data={e} />
+                })
+                //console.log("555sss",membershipData)
+        : loading === true ? <div>Loading.....</div> : membershipData.length === 0 && loading === true ? <div>No Company Found</div> : ""} 
+        
+          
   
             </Flex>
         </Flex> </Flex>

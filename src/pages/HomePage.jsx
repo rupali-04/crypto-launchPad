@@ -99,7 +99,7 @@ const HomePage = () => {
 
     return (<><p>
      
-      <Flex fontFamily={'Inter'}><SideBar/> <Spacer />
+      <Flex fontFamily={'Inter'}><SideBar d={"ido"}/> <Spacer />
       <Flex  flexWrap={"wrap"} ml="3rem"  w="100%"  flexDirection={"column"}>
       <NavBar data={"upcoming"}/><br></br>
       <Heading  size={"lg"} >Upcoming IDO</Heading><br></br>

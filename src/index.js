@@ -12,6 +12,7 @@ root.render(
   <React.StrictMode>
     <div className='t'>
     <App />
+    
     </div>
   </React.StrictMode>
   </Provider> 

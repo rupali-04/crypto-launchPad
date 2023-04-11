@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 
 const db = getFirestore(app);
 
+
+
 const ProjectBid = ({data}) =>{
     const [loading,setLoading] = useState(true);
     const wallet = useSelector(state => state.wallet);
@@ -15,7 +17,7 @@ const ProjectBid = ({data}) =>{
 
     useEffect(()=>{
         getData();
-     },[])
+    },[])
      
     const getData = async () =>{
         setLoading(true);
@@ -28,19 +30,19 @@ const ProjectBid = ({data}) =>{
     
             querySnapshot = await getDocs(q);
             
-          if (querySnapshot != null && loading != false) {
-          console.log("loopppp");
-          try{
+            if (querySnapshot != null && loading != false) {
+                console.log("loopppp");
+            try{
 
-          console.log(querySnapshot);
-            querySnapshot.forEach((doc) => {
-             console.log("each el",doc.data());
+                console.log(querySnapshot);
+                querySnapshot.forEach((doc) => {
+                console.log("each el",doc.data());
            
-              setInvestmentData([...investmentData,doc.data()]);
+                setInvestmentData([...investmentData,doc.data()]);
              
-              console.log("datassssss",loading);
+                console.log("datassssss",loading);
              
-              setLoading(false);
+                setLoading(false);
               
              
             })
@@ -89,7 +91,7 @@ const ProjectBid = ({data}) =>{
                     <Text w="150px">Bidding Status</Text>
                   
                 </Flex><Divider h="0.095rem" mt="0rem" bg={"black"}/>
-                <Flex gap="4" fontWeight={"bold"}>
+                {/* <Flex gap="4" fontWeight={"bold"}>
                     <Text w="150px">SCRIPT NETWORK</Text>
                     <Text w="150px">0.01 BUSD</Text>
                     <Text w="150px">$10,500</Text>
@@ -97,7 +99,7 @@ const ProjectBid = ({data}) =>{
                   
                    
                 </Flex>
-                
+                 */}
         </Flex>
     </>)
 }

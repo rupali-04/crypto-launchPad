@@ -97,7 +97,7 @@ if(!loading){
 
 
     return(<><p>
-        <Flex fontFamily={'Inter'}><SideBar/><Spacer/>
+        <Flex fontFamily={'Inter'}><SideBar d={"airdrop"}/><Spacer/>
         <Flex  flexWrap={"wrap"} ml="3rem" mt="2rem"  w="100%"  flexDirection={"column"}>
 <Heading size={"lg"} >Airdrop Projects</Heading>
 <Text size={"sm"}  color="gray">Participate In Our Exclusive Airdrops</Text><br></br>

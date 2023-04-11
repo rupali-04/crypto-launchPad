@@ -27,8 +27,27 @@ const Home = () => {
       id: "",
       airdropInvestment: 0,
       idoInvestment:0,
-      kycStatus:false,
-      membershipStatus: false,
+      kycStatus:{
+        kycStatus: false,
+        kycId: "00000"
+      },
+      membershipStatus: {
+        Airdrop:{
+        membershipId:
+        "00000000000",
+        membershipStatus:
+        false},
+        IDO:{
+          membershipId:
+          "00000000000",
+          membershipStatus:
+          false},
+          Venture:{
+            membershipId:
+            "00000000000",
+            membershipStatus:
+            false},
+      },
       totalAirdropInvestment:0,
       totalAirdrops:0,
       totalIDOInvestment:0,
@@ -62,7 +81,7 @@ const getData = async() => {
    
 
 
-  
+    
   if (querySnapshot != null) {
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
@@ -108,19 +127,19 @@ let dataList = null;
    
    
 
-    return(<><p><Flex fontFamily={'Inter'}><SideBar />
-    <Flex flexWrap={"wrap"} flexDirection={"column"} w="100%" ml="3rem">
+    return(<><p><Flex fontFamily={'Inter'}><SideBar d={"dashboard"}/>
+    <Flex flexWrap={"wrap"} flexDirection={"column"} w="100%" ml="1.5rem">
        {dataList}
        <HStack w={"max-content"} h={"max-content"}  p={"2"} pt="0" >
 
  
   
-<ButtonGroup  gap='2' variant='outline'>
+<ButtonGroup ml={'1.5rem'} mt='1rem' gap='2' variant='outline'>
  
   <Button borderRadius='40' onClick={()=>{setType("ido")}} colorScheme={type === "ido" ? "twitter" : "blackAlpha"}>IDO Project Details</Button>
   <Button borderRadius='40' onClick={()=>{setType("airdrop")}} colorScheme={type === "airdrop" ? "twitter" : "blackAlpha"}>Airdrop Details</Button>
   <Button borderRadius='40' onClick={()=>{setType("venture")}} colorScheme={type === "venture" ? "twitter" : "blackAlpha"}>Honey-Bite Venture Details</Button>
-  </ButtonGroup>
+</ButtonGroup>
 <Spacer />
 
 </HStack>

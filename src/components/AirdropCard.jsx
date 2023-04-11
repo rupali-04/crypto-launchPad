@@ -3,10 +3,43 @@ import {TiSocialLinkedin,TiSocialFacebook,TiSocialTwitter} from 'react-icons/ti'
 import {FaTelegramPlane} from 'react-icons/fa';
 import {AiOutlineGlobal} from 'react-icons/ai';
 import { useDisclosure } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import {AABI} from '../ABIs/AABI';
+import { ethers } from "ethers";
+import { useState } from "react";
+
 const AirdropCard = ({data}) =>{
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  console.log("airdropData",data);
-    return (
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [investmentAmt,setInvestmentAmount] = useState();
+  const wallet = useSelector(state => state.wallet);
+  console.log(data);
+  const handleInvestment = async(e) =>{
+    
+    const AirdropPurchase = new ethers.Contract("0xa343cF90bC6A87Ebed64A09AfC56A08D107EF4DF", AABI, wallet.signer);
+    let privateKey = "0x5a188b93a4d239709fc8527012db2d0216fb127a6d17578dda348d321d0beb36"
+    let w = new ethers.Wallet(privateKey);
+    const timePeriod = Math.floor(new Date().getTime() / 1000.0);
+    const tTokens =  ethers.utils.parseEther(`${0.0002}`)
+    let com = ethers.utils.parseEther(`${0.0002}`);
+    let pay = ethers.utils.parseEther(`${parseFloat(investmentAmt)}`);
+    const hashData = await AirdropPurchase.getMessageHashForPurchase(wallet.address,'0x8A29B5B896020a0259C582db2443df8670C19e02',timePeriod,tTokens,com,pay);
+    console.log(hashData);
+    const messageHashBytes = ethers.utils.arrayify(hashData);
+    let tPPrice = ethers.utils.parseEther(`${0.0002+parseFloat(investmentAmt)}`);
+
+    const sign = await w.signMessage(messageHashBytes);
+    let tx; 
+    try{
+      tx = await AirdropPurchase.purchaseToken(wallet.address,'0x8A29B5B896020a0259C582db2443df8670C19e02', timePeriod,tTokens.toBigInt(),com.toBigInt(),pay.toBigInt(),sign,{ value: tPPrice
+      });
+      tx.wait();
+      console.log(tx);
+    }catch(err){
+      console.log(err);
+    }
+   
+  }
+  return (
 
         <>
             <Card  maxW={"360px"} bg={"#F1F1F1"} color="black" shadow={"0"} cursor="pointer" borderRadius={"0"}>
@@ -106,7 +139,14 @@ const AirdropCard = ({data}) =>{
             </Flex>
             <Flex direction={"column"} ml="1rem">
 
-             <Flex> <Heading size={"lg"} >WeWay</Heading><Spacer/> <Flex direction={"column"} mr="3rem"><Button borderRadius={"40px"} colorScheme={"blackAlpha"} w="250px">Invest Now</Button><Text textAlign={"center"} fontSize={"12px"} color="gray.200">Maximum investment $5* </Text></Flex></Flex>
+             <Flex> <Heading size={"lg"} >WeWay</Heading><Spacer/> <Flex direction={"column"} mr="3rem"><Input placeholder="Enter Investment Amount" onChange={(e)=>{setInvestmentAmount(e.target.value)}} mb="0.5rem" sx={{
+        backgroundColor: 'gray.100',
+        borderRadius: '40px',
+        padding: '0.5rem 1rem',
+        border: '1px solid gray',
+        fontSize: '1rem',
+       color: 'black'
+      }}></Input><Button borderRadius={"40px"} colorScheme={"blackAlpha"} w="250px" onClick={(e)=>{handleInvestment(e)}}>Invest Now</Button><Text textAlign={"center"} fontSize={"12px"} color="gray.200">Maximum investment $5* </Text></Flex></Flex>
 
               <Text>IDO Price: 0.02 BUSD</Text>
               <Flex p="-2" gap="2">

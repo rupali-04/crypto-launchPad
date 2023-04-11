@@ -96,7 +96,7 @@ const ActivePage = () => {
   }
 
 
-    return(<><p> <Flex fontFamily={'Inter'}><SideBar/><Spacer />
+    return(<><p> <Flex fontFamily={'Inter'}><SideBar d={"ido"}/><Spacer />
     <Flex flexWrap={"wrap"} ml="3rem" w="100%" flexDirection={"column"}>
         <NavBar data={"active"}/><br></br>
       <Heading size={"lg"} >Active IDO</Heading><br></br>

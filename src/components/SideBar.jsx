@@ -27,7 +27,7 @@ import {getFirestore} from "firebase/firestore";
 const db = getFirestore(app);
 
 
-    const SideBar = () => {
+    const SideBar = ({d}) => {
     const [a,setAddress] = useState(null);
     const [c,setChain] = useState(null);
     const [s,setSigner] = useState(null);
@@ -39,31 +39,26 @@ const db = getFirestore(app);
     const isRole = useSelector(state => state.role);
     const wallet = useSelector(state => state.wallet);
     const [r,setRole] = useState('user');
+    useEffect(()=>{
+      console.log("color",d);
    
-    useEffect(() => {
+    })
+    useEffect(() => { 
       console.log("Role",isRole);
      if(p){
       window.ethereum.on("accountsChanged", (accounts) => {
         onAccountChange(accounts[0]);
       });
-
       window.ethereum.on("chainChanged", (chainId) => {
         onAccountChange(chainId);
       });
-     
      }
-        
-      
     }, [p]);
 
     useEffect(()=>{
-    
       if(wallet ){
         getData(wallet.address)   
       }
-      
-      
-    
     },[wallet])
 
     const getData = async (add) =>{
@@ -100,8 +95,15 @@ const db = getFirestore(app);
 
           
             const insertData = {
-              kycStatus: false,
-              membershipStatus: false,
+              kycStatus: {
+                'kycId': "00000",
+                'kycStatus': "InActive"
+              },
+              membershipStatus: {
+                IDO: {membershipStatus: false,membershipId: "00000000000"},
+                Venture: {membershipStatus: false,membershipId: "00000000000"},
+                Airdrop: {membershipStatus: false,membershipId: "00000000000"}
+              },
               totalAirdropInvestment: {
                 Polygon: 0,
                 Ethereum: 0,
@@ -224,15 +226,15 @@ const db = getFirestore(app);
 
                <br></br>
                
-             {isLoggedIn === false && isRole === null ? "" : isRole === "user" && loading != false ? <><Link to="/dashboard"><Text mt="0.5rem" color={"blue.400"} >Dashboard</Text></Link></> : ""}   
+             {isLoggedIn === false && isRole === null ? "" : isRole === "user" && loading != false ? <><Link to="/dashboard">{d === "dashboard" ? <Text mt="0.5rem" color={"blue.400"} >Dashboard</Text> : <Text mt="0.5rem" color={"black"} >Dashboard</Text>}</Link></> : ""}   
              {/* {isLoggedIn === false && isRole === "admin" ? "" :  <Link to="/profile"><Text mt="0.5rem" >Profile</Text></Link>}    */}
              
-             {isLoggedIn === false && isRole === null ? "" : isRole === "Admin" && loading != false ? <Link to="/admin/dashboard">  <Text mt="0.5rem" >Admin Panel</Text> </Link> : ""}
+             {isLoggedIn === false && isRole === null ? "" : isRole === "Admin" && loading != false ? <Link to="/admin/dashboard">  {d === "admin" ? <Text mt="0.5rem" color={"blue.400"}>Admin Panel</Text> : <Text mt="0.5rem" color={"black"}>Admin Panel</Text> } </Link> : ""}
              {/* {isLoggedIn === false ? "" : <Link to="/company/dashboard">   <Text mt="0.5rem">Company Panel</Text></Link>} */}
-              <Link to="/">  <Text mt="0.5rem" >All Project</Text> </Link>
-              {/* <Link to="/airdrop">   <Text mt="0.5rem">Airdrop</Text></Link> */}
-             <Link to="/venture"> <Text mt="0.5rem">Honey-Bite Venture</Text> </Link>
-                <Link to="/membership">   <Text mt="0.5rem">Membership</Text></Link>
+             <Link to="/"> { d === "ido" ? <Text mt="0.5rem" color={"blue.400"}>IDO</Text> : <Text mt="0.5rem" color={"black"}>IDO</Text>}</Link>
+              <Link to="/airdrop">  {d === "airdrop" ? <Text mt="0.5rem" color={"blue.400"}>Airdrop</Text> : <Text mt="0.5rem" color={"black"}>Airdrop</Text>} </Link>
+             <Link to="/venture"> {d === "venture" ? <Text mt="0.5rem" color={"blue.400"}>Honey-Bite Venture</Text> : <Text mt="0.5rem" color={"black"}>Honey-Bite Venture</Text>} </Link>
+                <Link to="/membership">   {d === "membership" ? <Text mt="0.5rem" color={"blue.400"}>Membership</Text> : <Text mt="0.5rem" color={"black"}>Membership</Text>}</Link>
              
                 <Box>
                     <Flex mt="0.5rem" >

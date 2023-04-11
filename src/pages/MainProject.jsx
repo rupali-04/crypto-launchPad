@@ -33,10 +33,14 @@ const MainProject = () => {
   const [selectIteam,setIteam] = useState("details");
   const [investmentAmount,setInvest] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [insuranceState,setInsurance] = useState(true);
+  const [insuranceState,setInsurance] = useState(false);
   const isLoggedIn = useSelector(state => state.isLoggedIn);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comapnyData,setCompany] = useState(null);
+  const [userState,setUserState] = useState({
+    kycStatus: false,
+    membership: false
+  });
  const [st,setSt] = useState(false);
 
   const location = useLocation();
@@ -164,44 +168,93 @@ console.log(p);
  }
 } 
 
+const getUserData = async()=>{
+  const uRef = doc(db, "user",wallet.address);
+  
+  const d = await getDoc(uRef);
+  console.log(d.data());
+  let uS = {}
+  if(d.data().kycStatus.kycStatus == "Active"){
+    uS.kycStatus = true;
+  }else{
+    uS.kycStatus = false;
+  }
+  
+  uS.membership = d.data().membershipStatus['IDO'].membershipStatus;
+  setUserState(uS);
+  console.log(userState,uS);
+}
+
 
 const handleInvestment = async (e) =>{
   // e.preventDefault();
  // console.log("eee",e);
- console.log(comapnyData.honeyBiteSmartContract)
+
  const IDOPurchase = new ethers.Contract(comapnyData.honeyBiteSmartContract, IABI, wallet.signer);
-console.log(IDOPurchase);
 let privateKey = "0x5a188b93a4d239709fc8527012db2d0216fb127a6d17578dda348d321d0beb36"
 let w = new ethers.Wallet(privateKey);
 const timePeriod = Math.floor(new Date().getTime() / 1000.0);
 const tTokens =  ethers.utils.parseEther(`${ investmentAmount / comapnyData.tokenPrice}`)
-let t = comapnyData.commision/100;
-console.log("trrtr",t,investmentAmount);
-t = t * investmentAmount;
 
-console.log(t,tTokens);
-const tt = t + investmentAmount;
-const cPrice = ethers.utils.parseEther(`${t}`); 
-const pPrice = ethers.utils.parseEther(`${investmentAmount}`);
-const tPPrice = ethers.utils.parseEther(`${tt}`);
-console.log(tTokens.toBigInt());
+let t,cPrice,tt;
+if(userState.membership === true){
+  cPrice = 0;
+  tt = investmentAmount;
+}else{
+  t = comapnyData.commision/100;
+  t = t * investmentAmount;
 
-if(insuranceState === false ){
+  console.log(t,tTokens);
+  tt = t + investmentAmount;
+  cPrice = ethers.utils.parseEther(`${t}`); 
+
+}
+let pPrice = ethers.utils.parseEther(`${investmentAmount}`);
+let tPPrice = ethers.utils.parseEther(`${tt}`);
+let iPrice = 0;
+if(insuranceState === false){
+  iPrice = 0;
+}else{
+  // iPrice = (investmentAmount * comapnyData.insuranceCharge)/100;
+  // iPrice = (iPrice + investmentAmount).toFixed(4);
+  iPrice = comapnyData.insuranceCharge;
+  console.log("ip",iPrice);
+  let tempPrice = tt + iPrice;
+  iPrice = ethers.utils.parseEther(`${iPrice}`);
+  tPPrice = ethers.utils.parseEther(`${tempPrice}`);
+
+  console.log("iPrice",iPrice);
+}
+
    // console.log(comapnyData)
    
+
+   //console.log("tP",tPPrice.toBigInt(),iPrice.toBigInt(),cPrice.toBigInt());
+
  const hashData = await IDOPurchase.getMessageHashForPurchase(
     wallet.address,
     comapnyData.tokenSmartContract,
     timePeriod,
     tTokens,
-    0,
+    iPrice,
     cPrice,
     pPrice
   );
   const messageHashBytes = ethers.utils.arrayify(hashData);
   const sign = await w.signMessage(messageHashBytes);
+  
   try{
-    const tx = await IDOPurchase.purchaseToken(wallet.address,comapnyData.tokenSmartContract, timePeriod,tTokens.toBigInt(),0,cPrice.toBigInt(),pPrice.toBigInt(),sign,{ value: tPPrice})
+    
+    let tx; 
+    if(userState.membership === true && insuranceState == true){
+      tx = await IDOPurchase.purchaseToken(wallet.address,comapnyData.tokenSmartContract, timePeriod,tTokens.toBigInt(),iPrice.toBigInt(),cPrice,pPrice.toBigInt(),sign,{ value: tPPrice});
+    } else if(useState.membership === false && insuranceState === true){
+      tx = await IDOPurchase.purchaseToken(wallet.address,comapnyData.tokenSmartContract, timePeriod,tTokens.toBigInt(),iPrice.toBigInt(),cPrice.toBigInt(),pPrice.toBigInt(),sign,{ value: tPPrice});
+    }else if(userState.membership === true && insuranceState === false){
+      tx = await IDOPurchase.purchaseToken(wallet.address,comapnyData.tokenSmartContract, timePeriod,tTokens.toBigInt(),iPrice,cPrice.toBigInt(),pPrice.toBigInt(),sign,{ value: tPPrice});
+    }else{
+      tx = await IDOPurchase.purchaseToken(wallet.address,comapnyData.tokenSmartContract, timePeriod,tTokens.toBigInt(),iPrice,cPrice,pPrice.toBigInt(),sign,{ value: tPPrice})
+    }
     await tx.wait();
     console.log(tx);
     saveToDB(tx);
@@ -209,33 +262,9 @@ if(insuranceState === false ){
   }catch(err){
     console.log(err);
   }
-    console.log(sign);
-  }else{
-   const itt = tt + investmentAmount*comapnyData.insuranceCharge/100;
-   const tPP = ethers.utils.parseEther(`${itt}`);
-    const hashData = await IDOPurchase.getMessageHashForPurchase(
-      wallet.address,
-      comapnyData.tokenSmartContract,
-      Math.floor(new Date().getTime() / 1000.0),
-      ethers.utils.parseEther(`${ investmentAmount / comapnyData.tokenPrice}`),
-      ethers.utils.parseEther(`${ investmentAmount*comapnyData.insuranceCharge/100}`),
-      ethers.utils.parseEther(`${ investmentAmount*comapnyData.commision/100}`),
-      ethers.utils.parseEther(`${ investmentAmount}`)
-    );
-
-    const messageHashBytes = ethers.utils.arrayify(hashData);
-    const sign = await w.signMessage(messageHashBytes);
-    try{
-      const tx = await IDOPurchase.purchaseToken(wallet.address,comapnyData.tokenSmartContract, timePeriod,tTokens.toBigInt(), ethers.utils.parseEther(`${ investmentAmount*comapnyData.insuranceCharge/100}`).toBigInt(),cPrice.toBigInt(),pPrice.toBigInt(),sign,{ value: tPP})
-      await tx.wait();
-      console.log(tx);
-      saveToDB(tx);
-     setSt(true);
-    }catch(err){
-      console.log(err);
-    }  
-    console.log(sign);
-  }
+   
+  
+   
 }
 
 let dataList = null;
@@ -248,7 +277,7 @@ return <div>Please check the url</div>
 }
     return(<><div>
         
-        <Flex fontFamily={'Inter'}><SideBar/>
+        <Flex fontFamily={'Inter'}><SideBar d={"ido"}/>
         <Flex flexWrap={"wrap"} ml="3rem"  w="100%"  flexDirection={"column"}>
         <Flex >
       {comapnyData != null ? <Box ml="2rem"> {dataList}<Flex fontSize={"12"}><Text fontWeight={"bold"}  color={"#1F94FF"} >Total Raise {comapnyData.totalRaise} FTM</Text>  <Spacer /><Text>Targeted Raise {comapnyData.targetedRaise} FTM</Text></Flex><Progress size='lg' value={ (comapnyData.totalRaise/ comapnyData.targetedRaise) * 100} /> </Box> : "" } 
@@ -257,7 +286,7 @@ return <div>Please check the url</div>
         
          
           
-        setInvest(parseFloat(e.target.value))}}/><Button  onClick={onOpen} borderRadius={"0"} colorScheme={"blue"}>Invest Now</Button></Flex><Text color="gray" fontSize={"12px"} textAlign="center">Maximum Invest $2000*</Text></Flex></CardBody></Card></Flex>
+        setInvest(parseFloat(e.target.value))}}/><Button  onClick={()=>{getUserData(); onOpen();}} borderRadius={"0"} colorScheme={"blue"}>Invest Now</Button></Flex><Text color="gray" fontSize={"12px"} textAlign="center">Maximum Invest $2000*</Text></Flex></CardBody></Card></Flex>
        </Flex>
       }
        </Flex>
@@ -287,10 +316,25 @@ return <div>Please check the url</div>
       <ModalHeader></ModalHeader>
       <ModalCloseButton />
       <ModalBody pb={6} fontFamily={'Inter'}>
+      {/* <Text>{userState.membershipStatus}</Text><Text>{userState.kycStatus}</Text> */}
+
 <Flex direction={"column"}>
-<Flex w="100%" alignItems={"center"} justifyContent="center"><Heading  fontSize={"62px"} fontWeight="bold">{insuranceState === true ? (investmentAmount+investmentAmount*comapnyData.commision/100 + investmentAmount*comapnyData.insuranceCharge/100).toFixed(8) : (investmentAmount+investmentAmount*comapnyData.commision/100).toFixed(8)}</Heading><Text fontSize={"32px"} fontWeight={"black"} mt="1.5rem">FTM</Text></Flex>
-{comapnyData.insurance === true ? <Flex w="100%" alignItems={"center"} justifyContent="center" mt="1rem" direction={"column"}><Checkbox w="300px" onChange={(e)=>{setInsurance(e.target.checked)}} defaultChecked>{comapnyData.insuranceCharge}% Insurance Charge[Optional]</Checkbox><Checkbox w="300px" disabled defaultChecked>{comapnyData.commision}% Service Charge</Checkbox></Flex>:<Flex w="100%" alignItems={"center"} justifyContent="center" mt="1rem" direction={"column"}><Checkbox w="300px" disabled defaultChecked>{comapnyData.commision}% Service Charge</Checkbox></Flex>}
-<Flex  w="100%" alignItems={"center"} justifyContent="center"><Button colorScheme={"blue"} mt="2rem" onClick={(e)=>{handleInvestment(e)}}>Invest Now</Button></Flex>
+<Flex w="100%" alignItems={"center"} justifyContent="center"><Heading  fontSize={"62px"} fontWeight="bold">{insuranceState === true && userState.membership === false ? (investmentAmount+investmentAmount*comapnyData.commision/100 + comapnyData.insuranceCharge).toFixed(6) : insuranceState === false && userState.membership === false ? (investmentAmount+investmentAmount*comapnyData.commision/100).toFixed(6) : insuranceState === false && userState.membership === true ? (investmentAmount).toFixed(6) : (investmentAmount + comapnyData.insuranceCharge).toFixed(6) }</Heading><Text fontSize={"32px"} fontWeight={"black"} mt="1.5rem">FTM</Text></Flex>
+{comapnyData.insurance === true ? <Flex w="100%" alignItems={"center"} justifyContent="center" mt="1rem" direction={"column"}><Checkbox w="300px" onChange={(e)=>{setInsurance(e.target.checked)}} >{comapnyData.insuranceCharge} Insurance Charge[Optional]</Checkbox>{ userState.membership === false ? <Checkbox w="300px" disabled defaultChecked>{comapnyData.commision}% Service Charge</Checkbox> : ""}</Flex>:<Flex w="100%" alignItems={"center"} justifyContent="center" mt="1rem" direction={"column"}>{userState. membership === false ? <Checkbox w="300px" disabled defaultChecked>{comapnyData.commision}% Service Charge</Checkbox> : ""}</Flex>}
+<Flex  w="100%" alignItems={"center"} justifyContent="center"><Button colorScheme={"blue"} mt="2rem" onClick={(e)=>{
+  alert(userState.membership);
+      if((comapnyData.kycRequirement === userState.kycStatus || comapnyData.kycRequirement === false) &&  ((comapnyData.accessType === "Private" && userState.membership === true) || comapnyData.accessType === "Public")){
+        handleInvestment(e);
+      }
+      else{
+        if(userState.kycStatus != comapnyData.kycRequirement || comapnyData.kycRequirement === false){
+          alert("You need to complete your KYC and wait for verification");
+        }else{
+          alert("To invest in this project need a membership");
+        }
+        
+      }
+  }}>Invest Now</Button></Flex>
 <Flex  w="100%" alignItems={"center"} justifyContent="center" mt="2rem"><Text fontSize={"14px"} >Please Note: </Text><Text ml="0.5rem" fontSize={"14px"} color="gray"> Service charge is mandatory & Insurance charge is optional</Text></Flex>
 </Flex>
         </ModalBody>

@@ -102,7 +102,7 @@ if(!loading){
 
     return (
         <p>
-            <Flex fontFamily={'Inter'}><SideBar/><Spacer />
+            <Flex fontFamily={'Inter'}><SideBar d={"venture"}/><Spacer />
 <Flex flexWrap={"wrap"} ml="3rem"  w="100%"  flexDirection={"column"}>
     <VentureNavBar data={"active"}/><br></br>
   <Heading size={"lg"} >Active Venture Projects</Heading><br></br>
